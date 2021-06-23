@@ -69,13 +69,13 @@ const char	*ft_parser_GOD(const char *input)
 }
 
 
-ft_parse_args(va_list arg, const char *input)
-{
-	if (flags.flags & FLAG_SHR_ARG != 0)
-	{
-		flags.shr = va_arg
-	}
-}
+// ft_parse_args(va_list arg, const char *input)
+// {
+// 	if (flags.flags & FLAG_SHR_ARG != 0)
+// 	{
+// 		flags.shr = va_arg;
+// 	}
+// }
 
 int ft_parse(va_list arg, const char *input)
 {
@@ -87,7 +87,7 @@ int ft_parse(va_list arg, const char *input)
 			ft_putchar_fd(*input, 1);
 		input++;
 	}
-	ft_parse_args(arg, input);
+	// ft_parse_args(arg, input);
 	return 1;
 }
 
@@ -106,6 +106,7 @@ int ft_printf(const char *input, ...)
 
 int main()
 {
-	ft_printf("regverv%-5dvervwe", 3);
+	ft_printf("%5d\n", 3);
+	printf("%5d", 3);
 	return 0;
 }
