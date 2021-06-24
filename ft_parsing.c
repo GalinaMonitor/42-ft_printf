@@ -5,25 +5,37 @@ char	*ft_type_parse(va_list arg, flags *flags)
 	char *str;
 
 	if (flags->flags & FLAG_TYP_D)
-	{
 		str = ft_itoa(va_arg(arg, int));
+
+	if (flags->flags & FLAG_TYP_U)
+		str = ft_itoa(va_arg(arg, unsigned int));
+
+	if (flags->flags & FLAG_TYP_S)
+	{
+		str = va_arg(arg, char *);
+		if (str == NULL)
+		{
+			str = ft_strdup("(null)");
+		}
 	}
-	// else if (*input == 'i')
-	// 	flags->flags |= FLAG_TYP_I;
-	// else if (*input == 'u')
-	// 	flags->flags |= FLAG_TYP_U;
-	// else if (*input == 'c')
-	// 	flags->flags |= FLAG_TYP_C;
-	// else if (*input == 's')
-	// 	flags->flags |= FLAG_TYP_S;
-	// else if (*input == 'p')
-	// 	flags->flags |= FLAG_TYP_P;
-	// else if (*input == 'x')
-	// 	flags->flags |= FLAG_TYP_X;
-	// else if (*input == 'X')
-	// 	flags->flags |= FLAG_TYP_XB;
-	// else if (*input == '%')
-	// 	flags->flags |= FLAG_TYP_PR;
+
+	if (flags->flags & FLAG_TYP_C)
+	{
+		str = malloc(sizeof(char) * 2);
+		*str = (char)va_arg(arg, int);
+		str++;
+		*str = '\0';
+		str--;
+	}
+
+	if (flags->flags & FLAG_TYP_X || flags->flags & FLAG_TYP_XB)
+		str = ft_itoa_base16(va_arg(arg, unsigned int), flags);
+	if (flags->flags & FLAG_TYP_P)
+	{
+		str = ft_itoa_base16(va_arg(arg, unsigned long), flags);
+		str = ft_strjoin("0x", str);
+	}
+
 	return str;
 }
 
@@ -37,9 +49,10 @@ const char	*ft_parser_GOD(const char *input, va_list arg, flags *flags)
 			flags->flags |= FLAG_FLG_MIN;
 		else if (*input == '0')
 			flags->flags |= FLAG_FLG_0;
-		while(*input == '-' && *input == '0')
+		while(*input == '-' || *input == '0') ///yrbvkwr,hbvliwekvjbwen
 			input++;
-		input++;
+		if (*input == '-' || *input == '0')
+			input++;
 	}
 	if (*input >= '0' && *input <= '9')
 	{
@@ -70,11 +83,14 @@ const char	*ft_parser_GOD(const char *input, va_list arg, flags *flags)
 			flags->precision = va_arg(arg, int);
 			input++;
 		}
+		else if (ft_strchr("diucspxX", *input))
+		{
+			flags->flags |= FLAG_PRS_DIG;
+			flags->precision = 0;
+		}
 	}
-	if (*input == 'd')
+	if (*input == 'd' || *input == 'i')
 		flags->flags |= FLAG_TYP_D;
-	else if (*input == 'i')
-		flags->flags |= FLAG_TYP_I;
 	else if (*input == 'u')
 		flags->flags |= FLAG_TYP_U;
 	else if (*input == 'c')
@@ -89,6 +105,11 @@ const char	*ft_parser_GOD(const char *input, va_list arg, flags *flags)
 		flags->flags |= FLAG_TYP_XB;
 	else if (*input == '%')
 		flags->flags |= FLAG_TYP_PR;
-	// printf("%d", flags->flags & FLAG_SHR_DIG);
+	// printf("FLAG_SHR_DIG = %d\n", flags->flags & FLAG_SHR_DIG);
+	// printf("FLAG_SHR_DIG = %d\n", flags->shirina);
+	// printf("FLAG_PRS_DIG = %d\n", flags->flags & FLAG_PRS_DIG);
+	// printf("FLAG_PRS_DIG = %d\n", flags->precision);
+	// printf("FLAG_TYP_C = %d\n", flags->flags & FLAG_TYP_C);
+
 	return (++input);
 }

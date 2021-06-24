@@ -28,6 +28,9 @@
 *.so.*
 *.dylib
 
+# Mac D_FILES
+.DS_Store
+
 # Executables
 *.exe
 *.out
