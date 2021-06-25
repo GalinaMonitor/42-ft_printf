@@ -1,12 +1,10 @@
-NAME = libft.a
-
-NAME_PRINTF = ft_printf
+NAME = libftprintf.a
 
 CC = gcc
 
 FLAGS = -Wall -Werror -Wextra
 
-LIBFT_LIST = ft_memset.c\
+LIBFT_BASE_LIST = ft_memset.c\
 	ft_bzero.c\
 	ft_calloc.c\
 	ft_memcpy.c\
@@ -56,12 +54,13 @@ LIBFT_LIST = ft_memset.c\
 SOURCES_LIST_PRINTF = ft_printf.c\
 	ft_obrabotchick.c\
 	ft_parsing.c\
+	ft_itoa_base16.c
 
 HEADER_PRINTF = ft_printf.h
 
 LIBFT_DIR = libft/
 
-LIBFT_FUNCS = $(addprefix $(LIBFT_DIR),$(LIBFT_LIST))
+LIBFT_FUNCS = $(addprefix $(LIBFT_DIR),$(LIBFT_BASE_LIST)), $(SOURCES_LIST_PRINTF)
 
 
 OBJECTS = $(patsubst %.c, %.o, $(LIBFT_FUNCS))
@@ -69,15 +68,13 @@ OBJECTS = $(patsubst %.c, %.o, $(LIBFT_FUNCS))
 
 D_FILES = $(patsubst %.c, %.d, $(LIBFT_FUNCS))
 
-all: $(NAME) $(SOURCES_LIST_PRINTF) $(HEADER_PRINTF)
-
+all: $(NAME)
 $(NAME): $(OBJECTS)
 	@ar rcs $(NAME) $?
 	@echo "libft.a is ready to use"
-	$(CC) $(FLAGS) $(SOURCES_LIST_PRINTF) $(NAME) -o $(NAME_PRINTF)
 
 %.o : %.c
-	@$(CC) $(FLAGS) -c $< -o $@ -MD
+	@$(CC) $(FLAGS) -c $< -o $@ -I $(LIBFT_DIR) -MD
 
 include $(wildcard $(D_FILES))
 
@@ -94,4 +91,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY : re all fclean clean bonus
+.PHONY : re all fclean clean
