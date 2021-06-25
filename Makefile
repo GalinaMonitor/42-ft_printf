@@ -1,10 +1,12 @@
 NAME = libft.a
 
+NAME_PRINTF = ft_printf
+
 CC = gcc
 
 FLAGS = -Wall -Werror -Wextra
 
-SOURCES_LIST = ft_memset.c\
+LIBFT_LIST = ft_memset.c\
 	ft_bzero.c\
 	ft_calloc.c\
 	ft_memcpy.c\
@@ -41,27 +43,38 @@ SOURCES_LIST = ft_memset.c\
 	ft_toupper.c\
 	ft_tolower.c\
 
-SOURCES_LIST_B = ft_lstnew.c\
-	ft_lstadd_front.c\
-	ft_lstsize.c\
-	ft_lstlast.c\
-	ft_lstadd_back.c\
-	ft_lstclear.c\
-	ft_lstdelone.c\
-	ft_lstiter.c\
-	ft_lstmap.c\
+# LIBFT_LIST_B = ft_lstnew.c\
+# 	ft_lstadd_front.c\
+# 	ft_lstsize.c\
+# 	ft_lstlast.c\
+# 	ft_lstadd_back.c\
+# 	ft_lstclear.c\
+# 	ft_lstdelone.c\
+# 	ft_lstiter.c\
+# 	ft_lstmap.c\
 
-OBJECTS = $(patsubst %.c, %.o, $(SOURCES_LIST))
-OBJECTS_B = $(patsubst %.c, %.o, $(SOURCES_LIST_B))
+SOURCES_LIST_PRINTF = ft_printf.c\
+	ft_obrabotchick.c\
+	ft_parsing.c\
+
+HEADER_PRINTF = ft_printf.h
+
+LIBFT_DIR = libft/
+
+LIBFT_FUNCS = $(addprefix $(LIBFT_DIR),$(LIBFT_LIST))
 
 
-D_FILES = $(patsubst %.c, %.d, $(SOURCES_LIST) $(SOURCES_LIST_B))
+OBJECTS = $(patsubst %.c, %.o, $(LIBFT_FUNCS))
 
-all: $(NAME)
+
+D_FILES = $(patsubst %.c, %.d, $(LIBFT_FUNCS))
+
+all: $(NAME) $(SOURCES_LIST_PRINTF) $(HEADER_PRINTF)
 
 $(NAME): $(OBJECTS)
 	@ar rcs $(NAME) $?
 	@echo "libft.a is ready to use"
+	$(CC) $(FLAGS) $(SOURCES_LIST_PRINTF) $(NAME) -o $(NAME_PRINTF)
 
 %.o : %.c
 	@$(CC) $(FLAGS) -c $< -o $@ -MD
