@@ -32,6 +32,8 @@ char	*ft_type_parse(va_list arg, flags *flags)
 	{
 		str = malloc(sizeof(char) * 2);
 		*str = (char)va_arg(arg, int);
+			if (*str == '\0')
+		flags->shirina-= 1;
 		str++;
 		*str = '\0';
 		str--;
