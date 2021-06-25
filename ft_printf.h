@@ -28,6 +28,7 @@ typedef struct	flags {
 	int	shirina;
 	int	precision;
 	int arg_type;
+	int count_print;
 
 }	flags;
 

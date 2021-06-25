@@ -42,7 +42,7 @@ char	*ft_itoa_unsigned(char *word, int ind, long n)
 	return (word);
 }
 
-char	*ft_itoa(int nbr)
+char	*ft_itoa(long long int nbr)
 {
 	long	n;
 	int		ind;

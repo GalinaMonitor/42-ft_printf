@@ -3,12 +3,21 @@
 char	*ft_type_parse(va_list arg, flags *flags)
 {
 	char *str;
+	unsigned int uns;
 
 	if (flags->flags & FLAG_TYP_D)
 		str = ft_itoa(va_arg(arg, int));
 
 	if (flags->flags & FLAG_TYP_U)
-		str = ft_itoa(va_arg(arg, unsigned int));
+	{
+		uns = va_arg(arg, unsigned int);
+		if (uns < 0)
+		{
+			uns+= 4294967295 - uns;
+		}
+		str = ft_itoa(uns);
+	}
+
 
 	if (flags->flags & FLAG_TYP_S)
 	{
@@ -30,6 +39,7 @@ char	*ft_type_parse(va_list arg, flags *flags)
 
 	if (flags->flags & FLAG_TYP_X || flags->flags & FLAG_TYP_XB)
 		str = ft_itoa_base16(va_arg(arg, unsigned int), flags);
+
 	if (flags->flags & FLAG_TYP_P)
 	{
 		str = ft_itoa_base16(va_arg(arg, unsigned long), flags);

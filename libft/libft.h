@@ -37,7 +37,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_strtrim(char const *s1, char const *set);
 int		ft_atoi(const char *str);
-char	*ft_itoa(int n);
+char	*ft_itoa(long long int n);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
 char	*ft_substr(char const *str, unsigned int start, size_t len);

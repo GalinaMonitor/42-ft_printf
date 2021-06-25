@@ -35,7 +35,7 @@ char	*ft_precision(char *str, flags *flags)
 			size = length;
 		}
 	}
-	if(flags->flags & FLAG_FLG_0 || flags->flags & FLAG_TYP_D || flags->flags & FLAG_TYP_X || flags->flags & FLAG_TYP_XB)
+	if(flags->flags & FLAG_FLG_0 && (flags->flags & FLAG_TYP_D || flags->flags & FLAG_TYP_X || flags->flags & FLAG_TYP_XB || flags->flags & FLAG_TYP_U))
 	{
 		if(*str == '-')
 		{
