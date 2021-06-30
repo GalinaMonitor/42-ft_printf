@@ -5,6 +5,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <inttypes.h>
 # include "libft/libft.h"
 
 # define FLAG_FLG_0		0b000000000000001
@@ -42,5 +43,11 @@ int			ft_printf(const char *input, ...);
 char		*ft_itoa_base16(unsigned long nbr, flags *flags);
 char		*ft_itoa_unsigned(char *word, int ind, long n, flags *flags);
 static int	ft_intlen(long n);
+unsigned long long	*ft_long_digits(unsigned long long nbr);
+unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long long *digits2);
+unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned long long num);
+unsigned long long	*ft_long_digits_min(unsigned long long *digits, long long *digits2);
+unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned long long *digits2);
+void	ft_long_digits_printf(unsigned long long *digits);
 
 #endif

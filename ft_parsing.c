@@ -31,9 +31,9 @@ char	*ft_type_parse(va_list arg, flags *flags)
 	if (flags->flags & FLAG_TYP_C)
 	{
 		str = malloc(sizeof(char) * 2);
-		*str = (char)va_arg(arg, int);
-			if (*str == '\0')
-		flags->shirina-= 1;
+		*str = va_arg(arg, int);
+		if (*str == '\0')
+			flags->shirina-= 1;
 		str++;
 		*str = '\0';
 		str--;
@@ -117,11 +117,5 @@ const char	*ft_parser_GOD(const char *input, va_list arg, flags *flags)
 		flags->flags |= FLAG_TYP_XB;
 	else if (*input == '%')
 		flags->flags |= FLAG_TYP_PR;
-	// printf("FLAG_SHR_DIG = %d\n", flags->flags & FLAG_SHR_DIG);
-	// printf("FLAG_SHR_DIG = %d\n", flags->shirina);
-	// printf("FLAG_PRS_DIG = %d\n", flags->flags & FLAG_PRS_DIG);
-	// printf("FLAG_PRS_DIG = %d\n", flags->precision);
-	// printf("FLAG_TYP_C = %d\n", flags->flags & FLAG_TYP_C);
-
 	return (++input);
 }
