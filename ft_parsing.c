@@ -48,6 +48,13 @@ char	*ft_type_parse(va_list arg, flags *flags)
 		str = ft_strjoin("0x", str);
 	}
 
+	if (flags->flags & FLAG_TYP_F)
+	{
+		str = ft_itoa_base16(va_arg(arg, unsigned long), flags);
+		str = ft_strjoin("0x", str);
+	}
+
+
 	return str;
 }
 
@@ -115,7 +122,7 @@ const char	*ft_parser_GOD(const char *input, va_list arg, flags *flags)
 		flags->flags |= FLAG_TYP_X;
 	else if (*input == 'X')
 		flags->flags |= FLAG_TYP_XB;
-	else if (*input == '%')
-		flags->flags |= FLAG_TYP_PR;
+	else if (*input == 'f')
+		flags->flags |= FLAG_TYP_D;
 	return (++input);
 }

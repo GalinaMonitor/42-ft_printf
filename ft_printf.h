@@ -22,7 +22,7 @@
 # define FLAG_TYP_P		0b000100000000000
 # define FLAG_TYP_X		0b001000000000000
 # define FLAG_TYP_XB	0b010000000000000
-# define FLAG_TYP_PR	0b100000000000000
+# define FLAG_TYP_F		0b100000000000000
 
 typedef struct	flags {
 	int flags;
@@ -43,11 +43,11 @@ int			ft_printf(const char *input, ...);
 char		*ft_itoa_base16(unsigned long nbr, flags *flags);
 char		*ft_itoa_unsigned(char *word, int ind, long n, flags *flags);
 static int	ft_intlen(long n);
-unsigned long long	*ft_long_digits(unsigned long long nbr);
-unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long long *digits2);
-unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned long long num);
-unsigned long long	*ft_long_digits_min(unsigned long long *digits, long long *digits2);
-unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned long long *digits2);
-void	ft_long_digits_printf(unsigned long long *digits);
+unsigned long long	*ft_long_digits(unsigned long long nbr, long long base);
+unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long long *digits2, long long base);
+unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned long long num, long long base);
+unsigned long long	*ft_long_digits_min(unsigned long long *digits, long long *digits2, long long base);
+unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned long long *digits2, long long base);
+void	ft_long_digits_printf(unsigned long long *digits, long long base, int count);
 
 #endif

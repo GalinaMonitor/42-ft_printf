@@ -1,12 +1,15 @@
 #include "ft_printf.h"
 
-unsigned long long	*ft_long_digits(unsigned long long nbr)
+unsigned long long	*ft_long_digits(unsigned long long nbr, long long base)
 {
 	int size = 10;
 	int ind1 = 0;
 	int ind2 = 0;
-	long long base = 1000000000;
 	unsigned long long *digits;
+
+	if (base == 10)
+		size = 1000;
+
 	digits = malloc(sizeof(unsigned long long) * size);
 	while(ind1 < size)
 	{
@@ -24,12 +27,15 @@ unsigned long long	*ft_long_digits(unsigned long long nbr)
 }
 
 
-unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long long *digits2)
+unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long long *digits2, long long base)
 {
 	int size = 10;
 	int ind1 = 0;
 	int ind2 = 0;
-	long long base = 1000000000;
+
+	if (base == 10)
+		size = 1000;
+
 
 	while (ind1 < size)
 	{
@@ -49,13 +55,16 @@ unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long
 	return (digits);
 }
 
-unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned long long num)
+unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned long long num, long long base)
 {
 	int size = 10;
 	int ind1 = 0;
 	int ind2 = 0;
-	long long base = 1000000000;
 	int temp = size;
+
+	if (base == 10)
+		size = 1000;
+
 
 	while (temp-- > 0)
 	{
@@ -65,12 +74,14 @@ unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned
 	return (digits);
 }
 
-unsigned long long	*ft_long_digits_min(unsigned long long *digits, long long *digits2)
+unsigned long long	*ft_long_digits_min(unsigned long long *digits, long long *digits2, long long base)
 {
 	int size = 10;
 	int ind1 = 0;
 	int ind2 = 0;
-	long long base = 1000000000;
+
+	if (base == 10)
+		size = 1000;
 
 	while (ind1 < size)
 	{
@@ -93,13 +104,16 @@ unsigned long long	*ft_long_digits_min(unsigned long long *digits, long long *di
 }
 
 
-unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned long long *digits2)
+unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned long long *digits2, long long base)
 {
 	int size = 10;
 	int ind1 = 0;
 	int ind2 = 0;
-	long long base = 1000000000;
 	unsigned long long	*result;
+
+	if (base == 10)
+		size = 1000;
+
 	result = malloc(sizeof(long long) * size);
 	while(ind1 < size)
 	{
@@ -107,7 +121,7 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 		ind1++;
 	}
 	ind1 = 0;
-	while (ind1 < size && digits[ind1] > 0 && digits2[ind2] > 0)
+	while (ind1 < size && digits[ind1] >= 0 && digits2[ind2] >= 0)
 	{
 		while (ind2 < size)
 		{
@@ -130,17 +144,28 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 	return (result);
 }
 
-void	ft_long_digits_printf(unsigned long long *digits)
+void	ft_long_digits_printf(unsigned long long *digits, long long base, int count)
 {
 	int size = 10;
 	int ind1 = 0;
 	int ind2 = 0;
-	long long base = 1000000000;
-	while(size-- > 0)
+
+	if (base == 10)
+		size = 1000;
+	if (count > 0)
 	{
-		if (digits[size] != 0)
-			printf("%llu", digits[size]);
+		size = count;
+		while(size-- > 0)
+		{
+				printf("%llu", digits[size]);
+		}
 	}
-	printf("\n");
+	else
+		while(size-- > 0)
+		{
+			if (digits[size] != 0)
+				printf("%llu", digits[size]);
+		}
+	//printf("\n");
 }
 
