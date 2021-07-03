@@ -8,7 +8,7 @@ unsigned long long	*ft_long_digits(unsigned long long nbr, long long base)
 	unsigned long long *digits;
 
 	if (base == 10)
-		size = 1000;
+		size = 100;
 
 	digits = malloc(sizeof(unsigned long long) * size);
 	while(ind1 < size)
@@ -34,7 +34,7 @@ unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long
 	int ind2 = 0;
 
 	if (base == 10)
-		size = 1000;
+		size = 100;
 
 
 	while (ind1 < size)
@@ -63,7 +63,7 @@ unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned
 	int temp = size;
 
 	if (base == 10)
-		size = 1000;
+		size = 100;
 
 
 	while (temp-- > 0)
@@ -81,7 +81,7 @@ unsigned long long	*ft_long_digits_min(unsigned long long *digits, long long *di
 	int ind2 = 0;
 
 	if (base == 10)
-		size = 1000;
+		size = 100;
 
 	while (ind1 < size)
 	{
@@ -112,7 +112,7 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 	unsigned long long	*result;
 
 	if (base == 10)
-		size = 1000;
+		size = 100;
 
 	result = malloc(sizeof(long long) * size);
 	while(ind1 < size)
@@ -144,28 +144,64 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 	return (result);
 }
 
-void	ft_long_digits_printf(unsigned long long *digits, long long base, int count)
+char	*ft_long_digits_to_str(unsigned long long *digits, long long base, int count, flags *flags)
 {
 	int size = 10;
 	int ind1 = 0;
 	int ind2 = 0;
+	char *str;
+
+	str = ft_strdup("");
 
 	if (base == 10)
-		size = 1000;
+		size = 100;
 	if (count > 0)
 	{
-		size = count;
-		while(size-- > 0)
+		if (flags->flags & FLAG_TYP_FMIN)
+			str = ft_strdup("-");
+		while (count > 0)
 		{
-				printf("%llu", digits[size]);
+			str = ft_strjoin(str, ft_itoa_base(digits[count], 10, flags));
+			count--;
 		}
 	}
 	else
-		while(size-- > 0)
+	{
+		while (digits[size - 1] == 0)
+			size--;
+		while (size > 0)
 		{
-			if (digits[size] != 0)
-				printf("%llu", digits[size]);
+			str = ft_strjoin(str, ft_itoa_base(digits[size - 1], 10, flags));
+			size--;
 		}
-	//printf("\n");
+	}
+	return (str);
 }
 
+unsigned long long	*ft_long_digits_power(unsigned long long *digits, int power, long long base)
+{
+	int size = 10;
+	int ind1 = 0;
+	int ind2 = 0;
+	unsigned long long	*result;
+
+	if (base == 10)
+		size = 100;
+
+
+	result = malloc(sizeof(long long) * size);
+	while(ind1 < size)
+	{
+		result[ind1] = 0;
+		ind1++;
+	}
+	if (power >= 1)
+	{
+		result[0] = 1;
+		while(power-- > 0)
+			result = ft_long_digits_multiply(result, digits, base);
+	}
+	else if (power == 0)
+		result[0] = 1;
+	return (result);
+}

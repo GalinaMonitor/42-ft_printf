@@ -1,5 +1,24 @@
 #include "ft_printf.h"
 
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (s == NULL)
+		return ;
+	write(1, s, ft_strlen(s));
+}
+size_t	ft_strlen(const char *str)
+{
+	size_t	count;
+
+	count = 0;
+	while (*str)
+	{
+		count++;
+		str++;
+	}
+	return (count);
+}
+
 int	ft_processor(va_list arg, flags *flags)
 {
 	char	*str;
@@ -20,7 +39,7 @@ int	ft_check_args_string(const char *input, flags *flags)
 {
 	int ind;
 	ind = 0;
-	while ((!ft_strchr("%dicsupxX", input[ind])) && input[ind])
+	while ((!ft_strchr("%dicsupxXf", input[ind])) && input[ind])
 		ind++;
 	if (input[ind] == '%')
 	{
@@ -75,33 +94,16 @@ int ft_printf(const char *input, ...)
 	return (count_print);
 }
 
-unsigned long long	*ft_long_digits_power(unsigned long long *digits, int power, long long base)
+
+
+int main()
 {
-	int size = 10;
-	int ind1 = 0;
-	int ind2 = 0;
-	unsigned long long	*result;
+	//printf("%d", 1234);
 
-	if (base == 10)
-		size = 1000;
+	ft_printf("%15d", 123);
 
 
-	result = malloc(sizeof(long long) * size);
-	while(ind1 < size)
-	{
-		result[ind1] = 0;
-		ind1++;
-	}
-	if (power >= 1)
-	{
-		result[0] = 1;
-		while(power-- > 0)
-			result = ft_long_digits_multiply(result, digits, base);
-	}
-	else if (power == 0)
-		result[0] = 1;
-	return (result);
+
+	return 0;
 }
-
-
 

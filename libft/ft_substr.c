@@ -15,7 +15,7 @@
 char	*ft_substr(char const *str, unsigned int start, size_t len)
 {
 	char	*dest;
-	int		temp;
+	//int		temp;
 	size_t	dlina;
 	int		ind;
 
@@ -23,7 +23,7 @@ char	*ft_substr(char const *str, unsigned int start, size_t len)
 	dlina = ft_strlen(str);
 	if (str == NULL)
 		return (NULL);
-	temp = len;
+	//temp = len;
 	if (len == 0 || start >= dlina)
 		return (ft_strdup(""));
 	if (dlina >= len)

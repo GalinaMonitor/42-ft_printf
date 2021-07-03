@@ -2,62 +2,75 @@
 
 char	*ft_precision(char *str, flags *flags)
 {
-	int		size;
-	int		length;
-	int		ind;
 	char	*result;
 
-	ind = 0;
-	length = ft_strlen(str);
 	if(flags->flags & FLAG_TYP_S)
-	{
-		if (flags->precision < length)
-		{
-			result = malloc(sizeof(char) * (flags->precision + 1));
-			size = flags->precision;
-		}
-		else
-		{
-			result = malloc(sizeof(char) * (length + 1));
-			size = length;
-		}
-	}
-	if(flags->flags & (FLAG_TYP_D | FLAG_TYP_X | FLAG_TYP_XB | FLAG_TYP_U))
-	{
-		if (flags->precision > length || *str == '0')
-		{
-			result = malloc(sizeof(char) * (flags->precision + 1));
-			size = flags->precision;
-		}
-		else
-		{
-			result = malloc(sizeof(char) * (length + 1));
-			size = length;
-		}
-	}
-	if((flags->flags & FLAG_FLG_0) || (flags->flags & (FLAG_TYP_D | FLAG_TYP_X | FLAG_TYP_XB | FLAG_TYP_U)))
-	{
-		if(*str == '-')
-		{
-			result[ind++] = *str;
-			str++;
-			length--;
-		}
-		while(flags->precision - length > 0)
-		{
-			result[ind++] = '0';
-			length++;
-			size--;
-		}
-	}
-	while(size-- > 0)
-	{
-		result[ind++] = *str;
-		str++;
-	}
-	result[ind] = '\0';
+		result = ft_precision_str(str, flags);
+	else if (flags->flags & (FLAG_TYP_D | FLAG_TYP_X | FLAG_TYP_XB | FLAG_TYP_U))
+		result = ft_precision_digits(str, flags);
+	else if (flags->flags & (FLAG_TYP_F))
+
 	return(result);
 }
+
+// char	*ft_precision(char *str, flags *flags)
+// {
+// 	int		size;
+// 	int		length;
+// 	int		ind;
+// 	char	*result;
+
+// 	ind = 0;
+// 	length = ft_strlen(str);
+// 	if(flags->flags & FLAG_TYP_S)
+// 	{
+// 		if (flags->precision < length)
+// 		{
+// 			result = malloc(sizeof(char) * (flags->precision + 1));
+// 			size = flags->precision;
+// 		}
+// 		else
+// 		{
+// 			result = malloc(sizeof(char) * (length + 1));
+// 			size = length;
+// 		}
+// 	}
+// 	if(flags->flags & (FLAG_TYP_D | FLAG_TYP_X | FLAG_TYP_XB | FLAG_TYP_U))
+// 	{
+// 		if (flags->precision > length || *str == '0')
+// 		{
+// 			result = malloc(sizeof(char) * (flags->precision + 1));
+// 			size = flags->precision;
+// 		}
+// 		else
+// 		{
+// 			result = malloc(sizeof(char) * (length + 1));
+// 			size = length;
+// 		}
+// 	}
+// 	if((flags->flags & FLAG_FLG_0) || (flags->flags & (FLAG_TYP_D | FLAG_TYP_X | FLAG_TYP_XB | FLAG_TYP_U)))
+// 	{
+// 		if(*str == '-')
+// 		{
+// 			result[ind++] = *str;
+// 			str++;
+// 			length--;
+// 		}
+// 		while(flags->precision - length > 0)
+// 		{
+// 			result[ind++] = '0';
+// 			length++;
+// 			size--;
+// 		}
+// 	}
+// 	while(size-- > 0)
+// 	{
+// 		result[ind++] = *str;
+// 		str++;
+// 	}
+// 	result[ind] = '\0';
+// 	return(result);
+// }
 
 char	*ft_shirina(char *str, flags *flags)
 {

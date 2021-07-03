@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-static int	ft_intlen_base16(long n)
+static int	ft_intlen_base(long n, short base)
 {
 	int	count;
 
@@ -9,31 +9,31 @@ static int	ft_intlen_base16(long n)
 		n *= -1;
 	while (n != 0)
 	{
-		n /= 16;
+		n /= base;
 		count++;
 	}
 	return (count);
 }
 
-char	*ft_itoa_unsigned_base16(char *word, int ind, long n, flags *flags)
+char	*ft_itoa_unsigned_base(char *word, int ind, long n, flags *flags, short base)
 {
 	int temp;
 
 	while (n > 0)
 	{
-		temp = n % 16 + 48;
+		temp = n % base + 48;
 		if (temp > 57 && flags->flags & FLAG_TYP_XB)
 			temp+= 7;
 		else if (temp > 57 && (flags->flags & FLAG_TYP_X || flags->flags & FLAG_TYP_P))
 			temp+= 39;
 		word[ind] = temp;
-		n /= 16;
+		n /= base;
 		ind--;
 	}
 	return (word);
 }
 
-char	*ft_itoa_base16(unsigned long nbr, flags *flags)
+char	*ft_itoa_base(unsigned long nbr, short base, flags *flags)
 {
 	long	n;
 	int		ind;
@@ -42,7 +42,7 @@ char	*ft_itoa_base16(unsigned long nbr, flags *flags)
 
 	n = (unsigned long)nbr;
 	ind = 0;
-	count = ft_intlen_base16(n);
+	count = ft_intlen_base(n, base);
 	word = ft_calloc(count + 2, sizeof(char));
 	if (word == NULL)
 		return (NULL);
@@ -58,5 +58,5 @@ char	*ft_itoa_base16(unsigned long nbr, flags *flags)
 		word[0] = '0';
 		return (word);
 	}
-	return (ft_itoa_unsigned_base16(word, ind, n, flags));
+	return (ft_itoa_unsigned_base(word, ind, n, flags, base));
 }
