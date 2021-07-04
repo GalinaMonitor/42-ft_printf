@@ -125,7 +125,7 @@ char	*ft_precision_float(char *str, flags *flags)
 		}
 		ind1 = 0;
 		ind2 = 0;
-		if (finish = 0)
+		if (finish == 0)
 		{
 			result = malloc(sizeof(char) * (sum + 2));
 			result[ind1] = '1';
@@ -159,7 +159,7 @@ char	*ft_precision_float(char *str, flags *flags)
 					return (result);
 				}
 				else if (str[sum - 1] == '9')
-					str[sum - 1] == '0';
+					str[sum - 1] = '0';
 				sum--;
 			}
 			result = ft_strjoin("1", result);

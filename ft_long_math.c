@@ -1,10 +1,9 @@
 #include "ft_printf.h"
 
-unsigned long long	*ft_long_digits(unsigned long long nbr, long long base)
+unsigned long long	*ft_long_digits(unsigned long long nbr, unsigned long long base)
 {
 	int size = 10;
 	int ind1 = 0;
-	int ind2 = 0;
 	unsigned long long *digits;
 
 	if (base == 10)
@@ -27,11 +26,10 @@ unsigned long long	*ft_long_digits(unsigned long long nbr, long long base)
 }
 
 
-unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long long *digits2, long long base)
+unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long long *digits2, unsigned long long base)
 {
 	int size = 10;
 	int ind1 = 0;
-	int ind2 = 0;
 
 	if (base == 10)
 		size = 100;
@@ -55,11 +53,9 @@ unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long
 	return (digits);
 }
 
-unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned long long num, long long base)
+unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned long long num, unsigned long long base)
 {
 	int size = 10;
-	int ind1 = 0;
-	int ind2 = 0;
 	int temp = size;
 
 	if (base == 10)
@@ -74,37 +70,37 @@ unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned
 	return (digits);
 }
 
-unsigned long long	*ft_long_digits_min(unsigned long long *digits, long long *digits2, long long base)
-{
-	int size = 10;
-	int ind1 = 0;
-	int ind2 = 0;
+// unsigned long long	*ft_long_digits_min(unsigned long long *digits, long long *digits2, unsigned long long base)
+// {
+// 	int size = 10;
+// 	int ind1 = 0;
+// 	int ind2 = 0;
 
-	if (base == 10)
-		size = 100;
+// 	if (base == 10)
+// 		size = 100;
 
-	while (ind1 < size)
-	{
-		digits[ind1] -= digits2[ind1];
-		ind1++;
-	}
-	ind1 = 0;
+// 	while (ind1 < size)
+// 	{
+// 		digits[ind1] -= digits2[ind1];
+// 		ind1++;
+// 	}
+// 	ind1 = 0;
 
-	while (ind1 < size)
-	{
-		if (digits[ind1] < 0)
-		{
-			digits[ind1 + 1]-= 1;
-			digits[ind1]+= base;
-		}
-		ind1++;
-	}
+// 	while (ind1 < size)
+// 	{
+// 		if (digits[ind1] < 0)
+// 		{
+// 			digits[ind1 + 1]-= 1;
+// 			digits[ind1]+= base;
+// 		}
+// 		ind1++;
+// 	}
 
-	return (digits);
-}
+// 	return (digits);
+// }
 
 
-unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned long long *digits2, long long base)
+unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned long long *digits2, unsigned long long base)
 {
 	int size = 10;
 	int ind1 = 0;
@@ -121,7 +117,7 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 		ind1++;
 	}
 	ind1 = 0;
-	while (ind1 < size && digits[ind1] >= 0 && digits2[ind2] >= 0)
+	while (ind1 < size) //&& digits[ind1] >= 0 && digits2[ind2] >= 0
 	{
 		while (ind2 < size && size > (ind1 + ind2))
 		{
@@ -144,11 +140,9 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 	return (result);
 }
 
-char	*ft_long_digits_to_str(unsigned long long *digits, long long base, int count, flags *flags)
+char	*ft_long_digits_to_str(unsigned long long *digits, unsigned long long base, int count, flags *flags)
 {
 	int size = 10;
-	int ind1 = 0;
-	int ind2 = 0;
 	char *str;
 
 	str = ft_strdup("");
@@ -180,11 +174,10 @@ char	*ft_long_digits_to_str(unsigned long long *digits, long long base, int coun
 	return (str);
 }
 
-unsigned long long	*ft_long_digits_power(unsigned long long *digits, int power, long long base)
+unsigned long long	*ft_long_digits_power(unsigned long long *digits, int power, unsigned long long base)
 {
 	int size = 10;
 	int ind1 = 0;
-	int ind2 = 0;
 	unsigned long long	*result;
 
 	if (base == 10)

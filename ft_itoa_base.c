@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-static int	ft_intlen_base(long n, short base)
+int	ft_intlen_base(long n, short base)
 {
 	int	count;
 

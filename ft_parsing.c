@@ -11,10 +11,10 @@ char	*ft_type_parse(va_list arg, flags *flags)
 	if (flags->flags & FLAG_TYP_U)
 	{
 		uns = va_arg(arg, unsigned int);
-		if (uns < 0)
-		{
-			uns+= 4294967295 - uns;
-		}
+		// if (uns < 0)
+		// {
+		// 	uns+= 4294967295 - uns;
+		// }
 		str = ft_itoa(uns);
 	}
 

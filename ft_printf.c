@@ -94,14 +94,3 @@ int ft_printf(const char *input, ...)
 	va_end(arg);
 	return (count_print);
 }
-
-
-
-// int main()
-// {
-// 	//printf("%d", 1234);
-// 	printf("OR PRINTF = |%0344.2f|\n", -499.50000);
-
-// 	ft_printf("MY PRINTF = |%0344.2f|\n", (long double)-499.50000);
-
-// }
