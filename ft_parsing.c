@@ -102,7 +102,7 @@ const char	*ft_parser_GOD(const char *input, va_list arg, flags *flags)
 			flags->precision = va_arg(arg, int);
 			input++;
 		}
-		else if (ft_strchr("diucspxX", *input))
+		else if (ft_strchr("diucspfxX", *input))
 		{
 			flags->flags |= FLAG_PRS_DIG;
 			flags->precision = 0;

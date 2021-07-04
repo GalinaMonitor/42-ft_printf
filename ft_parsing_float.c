@@ -5,8 +5,8 @@ char	*ft_parsing_float(long double digit, flags *flags)
 	int count = 0;
 	int count2 = 0;
 	int power = 0;
-	uint64_t *nbr;
-	uint64_t *fract;
+	long long unsigned *nbr;
+	long long unsigned *fract;
 	int ind = 1;
 	int ind1 = 1;
 	char *str;
@@ -38,6 +38,7 @@ char	*ft_parsing_float(long double digit, flags *flags)
 				count = 0;
 			}
 			fract = ft_long_digits_sum(fract, ft_long_digits_power(ft_long_digits(5, 10), ind1, 10), 10);
+
 			count2 = ind1;
 		}
 
@@ -45,6 +46,7 @@ char	*ft_parsing_float(long double digit, flags *flags)
 		ind--;
 		ind1++;
 	}
-	str = ft_strjoin(ft_long_digits_to_str(nbr, 1000000000, 0, flags), ft_long_digits_to_str(fract, 10, count2, flags));
+	str = ft_strjoin(ft_long_digits_to_str(nbr, 1000000000, 0, flags), ".");
+	str = ft_strjoin(str, ft_long_digits_to_str(fract, 10, count2, flags));
 	return str;
 }

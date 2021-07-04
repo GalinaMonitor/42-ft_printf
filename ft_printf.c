@@ -1,23 +1,23 @@
 #include "ft_printf.h"
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (s == NULL)
-		return ;
-	write(1, s, ft_strlen(s));
-}
-size_t	ft_strlen(const char *str)
-{
-	size_t	count;
+// void	ft_putstr_fd(char *s, int fd)
+// {
+// 	if (s == NULL)
+// 		return ;
+// 	write(1, s, ft_strlen(s));
+// }
+// size_t	ft_strlen(const char *str)
+// {
+// 	size_t	count;
 
-	count = 0;
-	while (*str)
-	{
-		count++;
-		str++;
-	}
-	return (count);
-}
+// 	count = 0;
+// 	while (*str)
+// 	{
+// 		count++;
+// 		str++;
+// 	}
+// 	return (count);
+// }
 
 int	ft_processor(va_list arg, flags *flags)
 {
@@ -25,7 +25,7 @@ int	ft_processor(va_list arg, flags *flags)
 
 	str = ft_type_parse(arg, flags);
 
-	if(flags->flags & (FLAG_PRS_ARG | FLAG_PRS_DIG))
+	if(flags->flags & (FLAG_PRS_ARG | FLAG_PRS_DIG | FLAG_TYP_F | FLAG_TYP_FMIN))
 		str = ft_precision(str, flags);
 	if(flags->flags & (FLAG_SHR_ARG | FLAG_SHR_DIG))
 		str = ft_shirina(str, flags);
@@ -39,7 +39,7 @@ int	ft_check_args_string(const char *input, flags *flags)
 {
 	int ind;
 	ind = 0;
-	while ((!ft_strchr("%dicsupxXf", input[ind])) && input[ind])
+	while ((!ft_strchr("%dicsufpxXf", input[ind])) && input[ind])
 		ind++;
 	if (input[ind] == '%')
 	{
@@ -60,6 +60,7 @@ int ft_parse(va_list arg, const char *input)
 
 	flags = malloc(sizeof(flags));
 	flags->count_print = 0;
+	flags->precision = -1;
 	while(*input)
 	{
 		if (*input == '%')
@@ -96,14 +97,11 @@ int ft_printf(const char *input, ...)
 
 
 
-int main()
-{
-	//printf("%d", 1234);
+// int main()
+// {
+// 	//printf("%d", 1234);
+// 	printf("OR PRINTF = |%0344.2f|\n", -499.50000);
 
-	ft_printf("%15d", 123);
+// 	ft_printf("MY PRINTF = |%0344.2f|\n", (long double)-499.50000);
 
-
-
-	return 0;
-}
-
+// }

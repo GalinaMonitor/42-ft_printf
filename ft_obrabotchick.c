@@ -9,7 +9,7 @@ char	*ft_precision(char *str, flags *flags)
 	else if (flags->flags & (FLAG_TYP_D | FLAG_TYP_X | FLAG_TYP_XB | FLAG_TYP_U))
 		result = ft_precision_digits(str, flags);
 	else if (flags->flags & (FLAG_TYP_F))
-
+		result = ft_precision_float(str, flags);
 	return(result);
 }
 
@@ -86,7 +86,7 @@ char	*ft_shirina(char *str, flags *flags)
 
 	if(!(flags->flags & FLAG_FLG_MIN))
 	{
-		if(!(flags->flags & (FLAG_PRS_DIG | FLAG_PRS_ARG)) && (flags->flags & flags->flags & FLAG_FLG_0))
+		if((!(flags->flags & (FLAG_PRS_DIG | FLAG_PRS_ARG)) && (flags->flags & FLAG_FLG_0)) || (flags->flags & (FLAG_TYP_FMIN | FLAG_TYP_F)))
 		{
 			if(*str == '-')
 			{

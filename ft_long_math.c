@@ -123,7 +123,7 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 	ind1 = 0;
 	while (ind1 < size && digits[ind1] >= 0 && digits2[ind2] >= 0)
 	{
-		while (ind2 < size)
+		while (ind2 < size && size > (ind1 + ind2))
 		{
 			result[ind1 + ind2] += digits[ind1] * digits2[ind2];
 			ind2++;
@@ -155,14 +155,16 @@ char	*ft_long_digits_to_str(unsigned long long *digits, long long base, int coun
 
 	if (base == 10)
 		size = 100;
+	if (flags->flags & FLAG_TYP_FMIN)
+		{
+			str = ft_strdup("-");
+			flags->flags ^= FLAG_TYP_FMIN;
+		}
 	if (count > 0)
 	{
-		if (flags->flags & FLAG_TYP_FMIN)
-			str = ft_strdup("-");
-		while (count > 0)
+		while (count-- > 0)
 		{
 			str = ft_strjoin(str, ft_itoa_base(digits[count], 10, flags));
-			count--;
 		}
 	}
 	else

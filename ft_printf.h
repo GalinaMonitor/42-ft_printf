@@ -54,7 +54,7 @@ const char	*ft_parser_GOD(const char *input, va_list arg, flags *flags);
 int			ft_processor(va_list arg, flags *flags);
 int			ft_parse(va_list arg, const char *input);
 int			ft_printf(const char *input, ...);
-char		*ft_itoa_base(unsigned long nbr, short base, flags *flags);
+char		*ft_itoa_base(unsigned long long nbr, short base, flags *flags);
 char		*ft_itoa_unsigned(char *word, int ind, long n, flags *flags);
 static int	ft_intlen(long n);
 unsigned long long	*ft_long_digits(unsigned long long nbr, long long base);
@@ -68,6 +68,8 @@ char	*ft_long_digits_to_str(unsigned long long *digits, long long base, int coun
 char	*ft_parsing_float(long double digit, flags *flags);
 char	*ft_precision_digits(char *str, flags *flags);
 char	*ft_precision_str(char *str, flags *flags);
+
+char	*ft_precision_float(char *str, flags *flags);
 
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(const char *str);

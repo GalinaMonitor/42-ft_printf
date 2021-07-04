@@ -33,7 +33,7 @@ char	*ft_itoa_unsigned_base(char *word, int ind, long n, flags *flags, short bas
 	return (word);
 }
 
-char	*ft_itoa_base(unsigned long nbr, short base, flags *flags)
+char	*ft_itoa_base(unsigned long long nbr, short base, flags *flags)
 {
 	long	n;
 	int		ind;
