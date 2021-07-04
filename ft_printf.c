@@ -1,25 +1,6 @@
 #include "ft_printf.h"
 
-// void	ft_putstr_fd(char *s, int fd)
-// {
-// 	if (s == NULL)
-// 		return ;
-// 	write(1, s, ft_strlen(s));
-// }
-// size_t	ft_strlen(const char *str)
-// {
-// 	size_t	count;
-
-// 	count = 0;
-// 	while (*str)
-// 	{
-// 		count++;
-// 		str++;
-// 	}
-// 	return (count);
-// }
-
-int	ft_processor(va_list arg, flags *flags)
+int	ft_processor(va_list arg, s_flags *flags)
 {
 	char	*str;
 
@@ -32,11 +13,12 @@ int	ft_processor(va_list arg, flags *flags)
 
 	ft_putstr_fd(str, 1);
 	flags->count_print += ft_strlen(str);
-	free(str);
+	if (str)
+		free(str);
 	return 0;
 }
 
-int	ft_check_args_string(const char *input, flags *flags)
+int	ft_check_args_string(const char *input, s_flags *flags)
 {
 	int ind;
 	ind = 0;
@@ -53,32 +35,49 @@ int	ft_check_args_string(const char *input, flags *flags)
 	return -1;
 }
 
+int ft_check_and_parse(const char *input, va_list arg, s_flags *flags)
+{
+	int check_args;
+	int move_str;
+
+	check_args = ft_check_args_string(++input, flags);
+	if (check_args == 0)
+	{
+		move_str = ft_parser_GOD(input, arg, flags);
+		ft_processor(arg, flags);
+		return (move_str);
+	}
+	else if (check_args == -1)
+	{
+		free(flags);
+		return (-2);
+	}
+	else
+		return(check_args);
+}
+
 int ft_parse(va_list arg, const char *input)
 {
-	flags *flags;
-	int check_proc;
+	s_flags *flags;
+	int move_str;
+	int count_print;
 
-
-	flags = malloc(sizeof(flags));
+	move_str = 1;
+	flags = (s_flags *)malloc(sizeof(s_flags));
+	if (flags == NULL)
+		return (-1);
 	flags->count_print = 0;
 	flags->precision = -1;
 	while(*input)
 	{
 		if (*input == '%')
 		{
-			check_proc = ft_check_args_string(++input, flags);
-			if (check_proc == 0)
-			{
-				input = ft_parser_GOD(input, arg, flags);
-				ft_processor(arg, flags);
-			}
-			else if (check_proc == -1)
-			{
-				free(flags);
-				return (-1);
-			}
+			move_str += ft_check_and_parse(input, arg, flags);
+			if (move_str >= 0)
+				input+= move_str;
 			else
-				input+= check_proc;
+				return (-1);
+			move_str = 1;
 		}
 		else
 		{
@@ -86,8 +85,9 @@ int ft_parse(va_list arg, const char *input)
 			flags->count_print += 1;
 		}
 	}
+	count_print = flags->count_print;
 	free(flags);
-	return (flags->count_print);
+	return (count_print);
 }
 
 int ft_printf(const char *input, ...)

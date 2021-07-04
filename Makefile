@@ -24,17 +24,13 @@ OBJECTS = $(patsubst %.c, %.o, $(PRINTF_FUNCS))
 
 all: $(NAME)
 $(NAME): $(OBJECTS)
-	@$(MAKE) -C ./libft
-	@cp $(LIBFT) ./$(NAME)
-	@ar rcs $(NAME) $?
-	@echo "libftprintf.a is ready to use"
+	$(MAKE) -C ./libft
+	cp $(LIBFT) ./$(NAME)
+	ar rcs $(NAME) $?
+	echo "libftprintf.a is ready to use"
 
 %.o : %.c
-	@$(CC) $(FLAGS) -c $< -o $@ -I ./
-
-# bonus: $(OBJECTS_B)
-# 	ar rcs $(NAME) $?
-# 	echo "Libft Bonus Done!"
+	$(CC) $(FLAGS) -c $< -o $@ -I ./
 
 clean:
 	@$(MAKE) -C ./libft clean
@@ -47,4 +43,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY : re all fclean clean
+.PHONY : all re fclean clean

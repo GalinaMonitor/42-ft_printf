@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-char	*ft_parsing_float(long double digit, flags *flags)
+char	*ft_parsing_float(long double digit, s_flags *flags)
 {
 	int count = 0;
 	int count2 = 0;

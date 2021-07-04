@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-char	*ft_precision_str(char *str, flags *flags)
+char	*ft_precision_str(char *str, s_flags *flags)
 {
 	int		size;
 	int		length;
@@ -28,7 +28,7 @@ char	*ft_precision_str(char *str, flags *flags)
 	return(result);
 }
 
-char	*ft_precision_digits(char *str, flags *flags)
+char	*ft_precision_digits(char *str, s_flags *flags)
 {
 	int		size;
 	int		length;
@@ -39,12 +39,12 @@ char	*ft_precision_digits(char *str, flags *flags)
 	length = ft_strlen(str);
 	if (flags->precision > length || *str == '0')
 	{
-		result = malloc(sizeof(char) * (flags->precision + 1));
+		result = malloc(sizeof(char) * (flags->precision + 2));
 		size = flags->precision;
 	}
 	else
 	{
-		result = malloc(sizeof(char) * (length + 1));
+		result = malloc(sizeof(char) * (length + 2));
 		size = length;
 	}
 
@@ -53,6 +53,7 @@ char	*ft_precision_digits(char *str, flags *flags)
 		result[ind++] = *str;
 		str++;
 		length--;
+		//size--;
 	}
 	while(flags->precision - length > 0)
 	{
@@ -60,16 +61,17 @@ char	*ft_precision_digits(char *str, flags *flags)
 		length++;
 		size--;
 	}
-	while(size-- > 0)
+	while(size > 0)
 	{
 		result[ind++] = *str;
 		str++;
+		size--;
 	}
 	result[ind] = '\0';
 	return(result);
 }
 
-char	*ft_precision_float(char *str, flags *flags)
+char	*ft_precision_float(char *str, s_flags *flags)
 {
 	int	ind1;
 	int	ind2;

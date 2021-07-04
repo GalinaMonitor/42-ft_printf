@@ -15,7 +15,7 @@ int	ft_intlen_base(long n, short base)
 	return (count);
 }
 
-char	*ft_itoa_unsigned_base(char *word, int ind, long n, flags *flags, short base)
+char	*ft_itoa_unsigned_base(char *word, int ind, long n, s_flags *flags, short base)
 {
 	int temp;
 
@@ -33,7 +33,7 @@ char	*ft_itoa_unsigned_base(char *word, int ind, long n, flags *flags, short bas
 	return (word);
 }
 
-char	*ft_itoa_base(unsigned long long nbr, short base, flags *flags)
+char	*ft_itoa_base(unsigned long long nbr, short base, s_flags *flags)
 {
 	long	n;
 	int		ind;

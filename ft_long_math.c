@@ -143,7 +143,7 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 	return (result);
 }
 
-char	*ft_long_digits_to_str(unsigned long long *digits, unsigned long long base, int count, flags *flags)
+char	*ft_long_digits_to_str(unsigned long long *digits, unsigned long long base, int count, s_flags *flags)
 {
 	int size = 10;
 	char *str;

@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-char	*ft_precision(char *str, flags *flags)
+char	*ft_precision(char *str, s_flags *flags)
 {
 	char	*result;
 
@@ -10,11 +10,13 @@ char	*ft_precision(char *str, flags *flags)
 		result = ft_precision_digits(str, flags);
 	else if (flags->flags & (FLAG_TYP_F))
 		result = ft_precision_float(str, flags);
+	else
+		return(str);
 	free(str);
 	return(result);
 }
 
-char	*ft_shirina(char *str, flags *flags)
+char	*ft_shirina(char *str, s_flags *flags)
 {
 	int		spaces;
 	int		length;
@@ -25,7 +27,9 @@ char	*ft_shirina(char *str, flags *flags)
 	ind = 0;
 	ind2 = 0;
 	length = ft_strlen(str);
-	spaces = flags->shirina - ft_strlen(str);
+	spaces = flags->shirina - length;
+	if (spaces < 0)
+		spaces = 0;
 	result = malloc(sizeof(char) * (length + spaces + 1));
 
 	if(!(flags->flags & FLAG_FLG_MIN))
@@ -55,7 +59,8 @@ char	*ft_shirina(char *str, flags *flags)
 		while(spaces-- > 0)
 			result[ind++] = ' ';
 	}
-	free(str);
 	result[ind] = '\0';
+	if(str)
+		free(str);
 	return(result);
 }
