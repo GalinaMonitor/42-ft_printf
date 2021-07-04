@@ -69,7 +69,14 @@ const char	*ft_parser_GOD(const char *input, va_list arg, flags *flags)
 		else if (*input == '0')
 			flags->flags |= FLAG_FLG_0;
 		while(*input == '-' || *input == '0') ///yrbvkwr,hbvliwekvjbwen
+		{
+			if (*input == '-' && (flags->flags & FLAG_FLG_0))
+			{
+				flags->flags |= FLAG_FLG_MIN;
+				flags->flags ^= FLAG_FLG_0;
+			}
 			input++;
+		}
 		if (*input == '-' || *input == '0')
 			input++;
 	}
@@ -84,6 +91,11 @@ const char	*ft_parser_GOD(const char *input, va_list arg, flags *flags)
 	{
 		flags->flags |= FLAG_SHR_ARG;
 		flags->shirina = va_arg(arg, int);
+		if (flags->shirina < 0)
+		{
+			flags->flags |= FLAG_FLG_MIN;
+			flags->shirina*= -1;
+		}
 		input++;
 	}
 	if (*input == '.')
@@ -100,6 +112,8 @@ const char	*ft_parser_GOD(const char *input, va_list arg, flags *flags)
 		{
 			flags->flags |= FLAG_PRS_ARG;
 			flags->precision = va_arg(arg, int);
+			if (flags->precision < 0)
+				flags->precision*= -1;
 			input++;
 		}
 		else if (ft_strchr("diucspfxX", *input))

@@ -32,6 +32,7 @@ int	ft_processor(va_list arg, flags *flags)
 
 	ft_putstr_fd(str, 1);
 	flags->count_print += ft_strlen(str);
+	free(str);
 	return 0;
 }
 
@@ -72,7 +73,10 @@ int ft_parse(va_list arg, const char *input)
 				ft_processor(arg, flags);
 			}
 			else if (check_proc == -1)
+			{
+				free(flags);
 				return (-1);
+			}
 			else
 				input+= check_proc;
 		}
@@ -82,6 +86,7 @@ int ft_parse(va_list arg, const char *input)
 			flags->count_print += 1;
 		}
 	}
+	free(flags);
 	return (flags->count_print);
 }
 

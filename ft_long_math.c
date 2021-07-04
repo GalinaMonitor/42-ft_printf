@@ -50,6 +50,7 @@ unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long
 		}
 		ind1++;
 	}
+	free(digits2);
 	return (digits);
 }
 
@@ -137,6 +138,8 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 		}
 		ind1++;
 	}
+	free(digits);
+	free(digits2);
 	return (result);
 }
 
@@ -171,6 +174,7 @@ char	*ft_long_digits_to_str(unsigned long long *digits, unsigned long long base,
 			size--;
 		}
 	}
+	free(digits);
 	return (str);
 }
 
@@ -198,5 +202,6 @@ unsigned long long	*ft_long_digits_power(unsigned long long *digits, int power, 
 	}
 	else if (power == 0)
 		result[0] = 1;
+	free(digits);
 	return (result);
 }
