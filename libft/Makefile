@@ -54,9 +54,6 @@ SOURCES_LIST_B = ft_lstnew.c\
 OBJECTS = $(patsubst %.c, %.o, $(SOURCES_LIST))
 OBJECTS_B = $(patsubst %.c, %.o, $(SOURCES_LIST_B))
 
-
-# D_FILES = $(patsubst %.c, %.d, $(SOURCES_LIST) $(SOURCES_LIST_B))
-
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
@@ -65,8 +62,6 @@ $(NAME): $(OBJECTS)
 
 %.o : %.c
 	@$(CC) $(FLAGS) -c $< -o $@ -I ./
-
-# include $(wildcard $(D_FILES))
 
 bonus: $(OBJECTS_B)
 	@ar rcs $(NAME) $?

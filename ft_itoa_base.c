@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-int	ft_intlen_base(long n, short base)
+int	ft_intlen_base(unsigned long long n, short base)
 {
 	int	count;
 
@@ -15,7 +15,7 @@ int	ft_intlen_base(long n, short base)
 	return (count);
 }
 
-char	*ft_itoa_unsigned_base(char *word, int ind, long n, s_flags *flags, short base)
+char	*ft_itoa_unsigned_base(char *word, int ind, unsigned long long n, s_flags *flags, short base)
 {
 	int temp;
 
@@ -35,24 +35,25 @@ char	*ft_itoa_unsigned_base(char *word, int ind, long n, s_flags *flags, short b
 
 char	*ft_itoa_base(unsigned long long nbr, short base, s_flags *flags)
 {
-	long	n;
+	unsigned long long	n;
 	int		ind;
 	int		count;
 	char	*word;
 
-	n = (unsigned long)nbr;
+
+	n = nbr;
 	ind = 0;
 	count = ft_intlen_base(n, base);
 	word = ft_calloc(count + 2, sizeof(char));
 	if (word == NULL)
 		return (NULL);
 	ind += count - 1;
-	if (n < 0)
-	{
-		word[0] = '-';
-		n *= -1;
-		ind++;
-	}
+	// if (n < 0)
+	// {
+	// 	word[0] = '-';
+	// 	n *= -1;
+	// 	ind++;
+	// }
 	if (count == 0)
 	{
 		word[0] = '0';

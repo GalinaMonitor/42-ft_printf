@@ -8,6 +8,7 @@ char	*ft_type_parse(va_list arg, s_flags *flags)
 	unsigned int uns;
 	int count;
 
+	str = NULL;
 	if (flags->flags & FLAG_TYP_D)
 		str = ft_itoa(va_arg(arg, int));
 	else if (flags->flags & FLAG_TYP_U)
@@ -42,7 +43,11 @@ char	*ft_type_parse(va_list arg, s_flags *flags)
 		str = malloc(sizeof(char) * 2);
 		*str = va_arg(arg, int);
 		if (*str == '\0')
+		{
+			flags->flags |= FLAG_C_NULL;
 			flags->shirina-= 1;
+		}
+
 		str++;
 		*str = '\0';
 		str--;
@@ -53,8 +58,11 @@ char	*ft_type_parse(va_list arg, s_flags *flags)
 
 	else if (flags->flags & FLAG_TYP_P)
 	{
-		temp = ft_itoa_base(va_arg(arg, unsigned long), 16, flags);
-		str = ft_strjoin("0x", temp);
+		temp = ft_itoa_base(va_arg(arg, unsigned long long), 16, flags);
+		if ((temp[1]) == '\0' && flags->flags & (FLAG_PRS_ARG | FLAG_PRS_DIG))
+			str = ft_strdup("0x");
+		else
+			str = ft_strjoin("0x", temp);
 		free(temp);
 	}
 
@@ -62,6 +70,14 @@ char	*ft_type_parse(va_list arg, s_flags *flags)
 	{
 		long double ch = va_arg(arg, long double);
 		str = ft_parsing_float(ch, flags);
+	}
+	else if (flags->flags & FLAG_TYP_PR)
+	{
+		str = ft_strdup("%");
+		if (flags->flags & FLAG_PRS_DIG)
+			flags->flags -= FLAG_PRS_DIG;
+		if (flags->flags & FLAG_PRS_ARG)
+			flags->flags -= FLAG_PRS_ARG;
 	}
 	return str;
 }
@@ -105,6 +121,7 @@ int	ft_parser_GOD(const char *input, va_list arg, s_flags *flags)
 		if (flags->shirina < 0)
 		{
 			flags->flags |= FLAG_FLG_MIN;
+			flags->flags ^= FLAG_FLG_0;
 			flags->shirina*= -1;
 		}
 		ind++;
@@ -121,10 +138,10 @@ int	ft_parser_GOD(const char *input, va_list arg, s_flags *flags)
 		}
 		else if ( input[ind] == '*')
 		{
-			flags->flags |= FLAG_PRS_ARG;
+
 			flags->precision = va_arg(arg, int);
-			if (flags->precision < 0)
-				flags->precision*= -1;
+			if (flags->precision >= 0)
+				flags->flags |= FLAG_PRS_ARG;
 			ind++;
 		}
 		else if (ft_strchr("diucspfxX",  input[ind]))
@@ -149,5 +166,7 @@ int	ft_parser_GOD(const char *input, va_list arg, s_flags *flags)
 		flags->flags |= FLAG_TYP_XB;
 	else if ( input[ind] == 'f')
 		flags->flags |= FLAG_TYP_F;
+	else if ( input[ind] == '%')
+		flags->flags |= FLAG_TYP_PR;
 	return (++ind);
 }

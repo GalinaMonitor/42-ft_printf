@@ -10,26 +10,37 @@ int	ft_processor(va_list arg, s_flags *flags)
 		str = ft_precision(str, flags);
 	if(flags->flags & (FLAG_SHR_ARG | FLAG_SHR_DIG))
 		str = ft_shirina(str, flags);
+	if (flags->flags & FLAG_C_NULL)
+	{
+		if (flags->flags & FLAG_FLG_MIN)
+		{
+			ft_putchar_fd('\0', 1);
+			ft_putstr_fd(str, 1);
+		}
+		else
+		{
+			ft_putstr_fd(str, 1);
+			ft_putchar_fd('\0', 1);
+		}
+		flags->flags ^= FLAG_C_NULL;
+		flags->count_print += 1;
+	}
+	else
+		ft_putstr_fd(str, 1);
 
-	ft_putstr_fd(str, 1);
+
 	flags->count_print += ft_strlen(str);
 	if (str)
 		free(str);
 	return 0;
 }
 
-int	ft_check_args_string(const char *input, s_flags *flags)
+int	ft_check_args_string(const char *input)
 {
 	int ind;
 	ind = 0;
 	while ((!ft_strchr("%dicsufpxXf", input[ind])) && input[ind])
 		ind++;
-	if (input[ind] == '%')
-	{
-		ft_putchar_fd(input[ind], 1);
-		flags->count_print += 1;
-		return ++ind;
-	}
 	if (input[ind])
 		return 0;
 	return -1;
@@ -40,7 +51,7 @@ int ft_check_and_parse(const char *input, va_list arg, s_flags *flags)
 	int check_args;
 	int move_str;
 
-	check_args = ft_check_args_string(++input, flags);
+	check_args = ft_check_args_string(++input);
 	if (check_args == 0)
 	{
 		move_str = ft_parser_GOD(input, arg, flags);
@@ -76,7 +87,7 @@ int ft_parse(va_list arg, const char *input)
 			if (move_str >= 0)
 				input+= move_str;
 			else
-				return (-1);
+				return (0);
 			move_str = 1;
 		}
 		else
