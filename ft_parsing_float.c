@@ -1,5 +1,22 @@
 #include "ft_printf.h"
 
+char	*ft_float_check_nan(s_fdigit *fdigit, s_flags *flags, char *str)
+{
+	str = NULL;
+	if (fdigit->exponent == 23818)
+	{
+		if (fdigit->minus == 1 && fdigit->mantissa == 0)
+			str = ft_strdup("-inf");
+		else if (fdigit->minus == 0 && fdigit->mantissa == 0)
+			str = ft_strdup("+inf");
+		else if (fdigit->mantissa != 0)
+			str = ft_strdup("-nan");
+		flags->flags = 0;
+	}
+
+	return (str);
+}
+
 char	*ft_parsing_float(long double digit, s_flags *flags)
 {
 	int count = 0;
@@ -10,10 +27,13 @@ char	*ft_parsing_float(long double digit, s_flags *flags)
 	int ind = 1;
 	int ind1 = 1;
 	char *str;
-	fdigit	fdigit;
+	s_fdigit	fdigit;
 
 	fdigit.digit = digit;
-
+	str = NULL;
+	str = ft_float_check_nan(&fdigit, flags, str);
+	if (str == NULL)
+	{
 	power = fdigit.exponent - 16383;
 	nbr = ft_long_digits_power(ft_long_digits(2, 1000000000), power, 1000000000);
 	ind = 63;
@@ -48,5 +68,7 @@ char	*ft_parsing_float(long double digit, s_flags *flags)
 	}
 	str = ft_strjoin(ft_long_digits_to_str(nbr, 1000000000, 0, flags), ".");
 	str = ft_strjoin(str, ft_long_digits_to_str(fract, 10, count2, flags));
+	}
+
 	return str;
 }

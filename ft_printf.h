@@ -38,7 +38,7 @@ typedef struct	s_flags {
 
 }	s_flags;
 
-typedef union fdigit
+typedef union s_fdigit
 {
 		long double digit;
 		struct
@@ -47,7 +47,7 @@ typedef union fdigit
 			uint16_t exponent: 15;
 			uint8_t minus: 1;
 		};
-}	fdigit;
+}	s_fdigit;
 
 char		*ft_shirina(char *str, s_flags *flags);
 char		*ft_precision(char *str, s_flags *flags);
@@ -75,5 +75,6 @@ char	*ft_precision_float(char *str, s_flags *flags);
 
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(const char *str);
+char	*ft_float_check_nan(s_fdigit *fdigit, s_flags *flags, char *str);
 
 #endif
