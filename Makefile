@@ -15,6 +15,7 @@ SOURCES_LIST_PRINTF = ft_printf.c\
 	ft_precision.c\
 	ft_long_math.c\
 	ft_parsing_float.c\
+	ft_instruments.c
 
 SOURCES_LIST_LIBFT = ft_memset.c\
 	ft_bzero.c\

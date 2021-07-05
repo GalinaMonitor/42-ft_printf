@@ -1,180 +1,72 @@
 #include "ft_printf.h"
 
-char	*ft_precision_str(char *str, s_flags *flags)
+char	*ft_precision_str(char *input, s_flags *flags)
 {
-	int		size;
-	int		length;
+	int		size_of_result;
+	int		length_of_input;
 	int		ind;
 	char	*result;
 
 	ind = 0;
-	length = ft_strlen(str);
-	if (flags->precision < length)
+	length_of_input = ft_strlen(input);
+	if (flags->precision < length_of_input)
 	{
 		result = malloc(sizeof(char) * (flags->precision + 1));
-		size = flags->precision;
+		size_of_result = flags->precision;
 	}
 	else
 	{
-		result = malloc(sizeof(char) * (length + 1));
-		size = length;
+		result = malloc(sizeof(char) * (length_of_input + 1));
+		size_of_result = length_of_input;
 	}
-	while(size-- > 0)
+	while(size_of_result-- > 0)
 	{
-		result[ind++] = *str;
-		str++;
+		result[ind++] = *input;
+		input++;
 	}
 	result[ind] = '\0';
 	return(result);
 }
 
-char	*ft_precision_digits(char *str, s_flags *flags)
+char	*ft_precision_digits(char *input, s_flags *flags)
 {
-	int		size;
-	int		length;
+	int		size_of_result;
+	int		length_of_input;
 	int		ind;
 	char	*result;
 
 	ind = 0;
-	length = ft_strlen(str);
-	if (flags->precision > length || *str == '0')
+	length_of_input = ft_strlen(input);
+	size_of_result = ft_cmp_memory_length(input, &result, length_of_input, flags);
+	if(*input == '-')
 	{
-		result = malloc(sizeof(char) * (flags->precision + 2));
-		size = flags->precision;
+		result[ind++] = *(input++);
+		length_of_input--;
 	}
-	else
-	{
-		result = malloc(sizeof(char) * (length + 2));
-		size = length;
-	}
-
-	if(*str == '-')
-	{
-		result[ind++] = *str;
-		str++;
-		length--;
-		//size--;
-	}
-	while(flags->precision - length > 0)
+	while(flags->precision - length_of_input > 0)
 	{
 		result[ind++] = '0';
-		length++;
-		size--;
+		length_of_input++;
+		size_of_result--;
 	}
-	while(size > 0)
-	{
-		result[ind++] = *str;
-		str++;
-		size--;
-	}
+	while(size_of_result-- > 0)
+		result[ind++] = *(input++);
 	result[ind] = '\0';
 	return(result);
 }
 
-char	*ft_precision_float(char *str, s_flags *flags)
+char	*ft_precision(char *input, s_flags *flags)
 {
-	int	ind1;
-	int	ind2;
-	int ind3;
-	int finish;
-	int		print;
-	char *result;
-	int sum;
+	char	*result;
 
-	finish = 0;
-	ind1 = 0;
-	ind3 = 1;
-	if (flags->precision == -1)
-		flags->precision = 6;
-	while (str[ind1] != '.')
-		ind1++;
-	ind2 = flags->precision;
-	if (flags->precision == 0)
-		sum = ind1;
+	if(flags->flags & FLAG_TYP_S)
+		result = ft_precision_str(input, flags);
+	else if (flags->flags & (FLAG_TYP_D | FLAG_TYP_X | FLAG_TYP_XB | FLAG_TYP_U))
+		result = ft_precision_digits(input, flags);
+	else if (flags->flags & (FLAG_TYP_F))
+		result = ft_precision_float(input, flags);
 	else
-		sum = ind1 + ind2 + 1;
-	if (str[ind2 + ind1 + 1] >= '5')
-	{
-		while (ind2 > 1)
-		{
-			if (str[ind2 + ind1] != '9')
-			{
-				str[ind2 + ind1]+= 1;
-				finish = 1;
-				break;
-			}
-			else if (str[ind2 + ind1] == '9')
-				str[ind2 + ind1] = '0';
-			ind2--;
-		}
-		if (finish == 0)
-		{
-			ind1--;
-			while (ind1 >= 0)
-			{
-				if (str[ind1] != '9')
-				{
-					str[ind1]+= 1;
-					finish = 1;
-					break;
-				}
-				else if (str[ind1] == '9')
-				{
-					str[ind1] = '0';
-				}
-				ind1--;
-			}
-		}
-		ind1 = 0;
-		ind2 = 0;
-		if (finish == 0)
-		{
-			result = malloc(sizeof(char) * (sum + 2));
-			result[ind1] = '1';
-			ind1++;
-			print = ft_strlcpy((result + 1), str, sum + 1);
-		}
-		else
-		{
-			result = malloc(sizeof(char) * (sum + 1));
-			print = ft_strlcpy((result), str, sum + 1);
-		}
-	}
-	else
-	{
-		result = malloc(sizeof(char) * (sum + 1));
-		print = ft_strlcpy(result, str, sum + 1);
-	}
-	if (flags->precision == 0 && str[sum + 1] == '5')
-	{
-		while (str[sum + 1 + ind3] && str[sum + 1 + ind3] == '0')
-		{
-			ind3++;
-		}
-		if (str[sum + 1 + ind3])
-		{
-			while (sum > 0)
-			{
-				if (str[sum - 1] != '9')
-				{
-					str[sum - 1]+= 1;
-					return (result);
-				}
-				else if (str[sum - 1] == '9')
-					str[sum - 1] = '0';
-				sum--;
-			}
-			result = ft_strjoin("1", result);
-		}
-	}
-	if (print < sum)
-	{
-		while (print < sum)
-		{
-			result[print] ='0';
-			print++;
-		}
-		result[print] = '\0';
-	}
-	return (result);
+		return(input);
+	free(input);
+	return(result);
 }

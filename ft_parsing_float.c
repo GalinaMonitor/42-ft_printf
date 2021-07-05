@@ -17,58 +17,72 @@ char	*ft_float_check_nan(s_fdigit *fdigit, s_flags *flags, char *str)
 	return (str);
 }
 
-char	*ft_parsing_float(long double digit, s_flags *flags)
+int	ft_parsing_float_int(int power, long long unsigned **nbr, s_flags *flags, s_fdigit *fdigit)
 {
-	int count = 0;
-	int count2 = 0;
-	int power = 0;
+	int ind;
+
+	nbr[0] = ft_long_digits_power(ft_long_digits(2, 1000000000), power, 1000000000);
+	ind = 63;
+	if (fdigit->minus & 1)
+		flags->flags |= FLAG_TYP_FMIN;
+	while (--ind > 0 && power-- > 0)
+	{
+		if ((fdigit->mantissa >> ind) & 1)
+			nbr[0] = ft_long_digits_sum(nbr[0], ft_long_digits_power(ft_long_digits(2, 1000000000), power, 1000000000), 1000000000);
+	}
+	return (ind);
+}
+
+int	ft_parsing_float_fract(int ind, long long unsigned **fract, s_flags *flags, s_fdigit *fdigit)
+{
+	int count;
+	int count2;
+	int ind1;
+
+	count = 0;
+	count2 = 0;
+	ind1 = 0;
+	while (ind > 0)
+	{
+		if ((fdigit->mantissa >> ind) & 1)
+		{
+			if (count > 0)
+			{
+				fract [0]= ft_long_digits_multiply(ft_long_digits_power(ft_long_digits(10, 10), count, 10), fract[0], 10);
+				count = 0;
+			}
+			fract[0] = ft_long_digits_sum(fract[0], ft_long_digits_power(ft_long_digits(5, 10), ind1, 10), 10);
+			count2 = ind1;
+		}
+		count++;
+		ind--;
+		ind1++;
+	}
+	return (count2);
+}
+
+char	*ft_parsing_float(va_list arg, s_flags *flags)
+{
 	long long unsigned *nbr;
 	long long unsigned *fract;
-	int ind = 1;
-	int ind1 = 1;
+	int ind;
+	// int count2;
 	char *str;
-	s_fdigit	fdigit;
+	s_fdigit	*fdigit;
 
-	fdigit.digit = digit;
+	long double digit = va_arg(arg, long double);
+	fdigit->digit = digit;
 	str = NULL;
-	str = ft_float_check_nan(&fdigit, flags, str);
+	str = ft_float_check_nan(fdigit, flags, str);
 	if (str == NULL)
 	{
-		power = fdigit.exponent - 16383;
-		nbr = ft_long_digits_power(ft_long_digits(2, 1000000000), power, 1000000000);
-		ind = 63;
-		if (fdigit.minus & 1)
-			flags->flags |= FLAG_TYP_FMIN;
-		while (--ind > 0 && power-- > 0)
-		{
-
-			if ((fdigit.mantissa >> ind) & 1)
-				nbr = ft_long_digits_sum(nbr, ft_long_digits_power(ft_long_digits(2, 1000000000), power, 1000000000), 1000000000);
-		}
-
-		power = fdigit.exponent - 16383;
+		ind = ft_parsing_float_int(fdigit->exponent - 16383, &nbr, flags, fdigit);
 		fract = ft_long_digits(0, 10);
-		while (ind > 0)
-		{
-			if ((fdigit.mantissa >> ind) & 1)
-			{
-				if (count > 0)
-				{
-					fract = ft_long_digits_multiply(ft_long_digits_power(ft_long_digits(10, 10), count, 10), fract, 10);
-					count = 0;
-				}
-				fract = ft_long_digits_sum(fract, ft_long_digits_power(ft_long_digits(5, 10), ind1, 10), 10);
-
-				count2 = ind1;
-			}
-
-			count++;
-			ind--;
-			ind1++;
-		}
+		// count2 = ft_parsing_float_fract(ind, &fract, flags, fdigit);
+		// str = ft_strjoin(ft_long_digits_to_str(nbr, 1000000000, 0, flags), ".");
+		// str = ft_strjoin(str, ft_long_digits_to_str(fract, 10, count2, flags));
 		str = ft_strjoin(ft_long_digits_to_str(nbr, 1000000000, 0, flags), ".");
-		str = ft_strjoin(str, ft_long_digits_to_str(fract, 10, count2, flags));
+		str = ft_strjoin(str, ft_long_digits_to_str(fract, 10, ft_parsing_float_fract(ind, &fract, flags, fdigit), flags));
 	}
-
 	return str;
 }

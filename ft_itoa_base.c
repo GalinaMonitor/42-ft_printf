@@ -5,8 +5,8 @@ int	ft_intlen_base(unsigned long long n, short base)
 	int	count;
 
 	count = 0;
-	if (n < 0)
-		n *= -1;
+	// if (n < 0)
+	// 	n *= -1;
 	while (n != 0)
 	{
 		n /= base;

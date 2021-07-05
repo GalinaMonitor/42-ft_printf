@@ -1,21 +1,5 @@
 #include "ft_printf.h"
 
-char	*ft_precision(char *str, s_flags *flags)
-{
-	char	*result;
-
-	if(flags->flags & FLAG_TYP_S)
-		result = ft_precision_str(str, flags);
-	else if (flags->flags & (FLAG_TYP_D | FLAG_TYP_X | FLAG_TYP_XB | FLAG_TYP_U))
-		result = ft_precision_digits(str, flags);
-	else if (flags->flags & (FLAG_TYP_F))
-		result = ft_precision_float(str, flags);
-	else
-		return(str);
-	free(str);
-	return(result);
-}
-
 char	*ft_shirina(char *str, s_flags *flags)
 {
 	int		spaces;
@@ -38,8 +22,7 @@ char	*ft_shirina(char *str, s_flags *flags)
 		{
 			if(str[ind2] == '-')
 			{
-				result[ind++] = str[ind2];
-				ind2++;;
+				result[ind++] = str[ind2++];
 				length--;
 			}
 			while(spaces-- > 0)
@@ -50,10 +33,7 @@ char	*ft_shirina(char *str, s_flags *flags)
 				result[ind++] = ' ';
 	}
 	while(length-- > 0)
-	{
-		result[ind++] = str[ind2];
-		ind2++;
-	}
+		result[ind++] = str[ind2++];
 	if(flags->flags & FLAG_FLG_MIN)
 	{
 		while(spaces-- > 0)

@@ -1,94 +1,40 @@
 #include "ft_printf.h"
 
-int	ft_processor(va_list arg, s_flags *flags)
+int	ft_check_type_and_parse(const char *input, va_list arg, s_flags *flags)
 {
-	char	*str;
+	int	check_args;
+	int	move_str;
 
-	str = ft_type_parse(arg, flags);
-
-	if(flags->flags & (FLAG_PRS_ARG | FLAG_PRS_DIG | FLAG_TYP_F | FLAG_TYP_FMIN))
-		str = ft_precision(str, flags);
-	if(flags->flags & (FLAG_SHR_ARG | FLAG_SHR_DIG))
-		str = ft_shirina(str, flags);
-	if (flags->flags & FLAG_C_NULL)
-	{
-		if (flags->flags & FLAG_FLG_MIN)
-		{
-			ft_putchar_fd('\0', 1);
-			ft_putstr_fd(str, 1);
-		}
-		else
-		{
-			ft_putstr_fd(str, 1);
-			ft_putchar_fd('\0', 1);
-		}
-		flags->flags ^= FLAG_C_NULL;
-		flags->count_print += 1;
-	}
-	else
-		ft_putstr_fd(str, 1);
-
-
-	flags->count_print += ft_strlen(str);
-	if (str)
-		free(str);
-	return 0;
-}
-
-int	ft_check_args_string(const char *input)
-{
-	int ind;
-	ind = 0;
-	while ((!ft_strchr("%dicsufpxXf", input[ind])) && input[ind])
-		ind++;
-	if (input[ind])
-		return 0;
-	return -1;
-}
-
-int ft_check_and_parse(const char *input, va_list arg, s_flags *flags)
-{
-	int check_args;
-	int move_str;
-
-	check_args = ft_check_args_string(++input);
+	check_args = ft_check_if_type(++input);
 	if (check_args == 0)
 	{
-		move_str = ft_parser_GOD(input, arg, flags);
+		move_str = 1 + ft_parser_GOD(input, arg, flags);
 		ft_processor(arg, flags);
 		return (move_str);
 	}
 	else if (check_args == -1)
 	{
 		free(flags);
-		return (-2);
+		return (-1);
 	}
 	else
-		return(check_args);
+		return (check_args);
 }
 
-int ft_parse(va_list arg, const char *input)
+int	ft_print_trash_and_parse_str(va_list arg, s_flags *flags, const char *input)
 {
-	s_flags *flags;
-	int move_str;
-	int count_print;
+	int	move_str;
 
-	move_str = 1;
-	flags = (s_flags *)malloc(sizeof(s_flags));
-	if (flags == NULL)
-		return (-1);
-	flags->count_print = 0;
-	flags->precision = -1;
-	while(*input)
+	while (*input)
 	{
 		if (*input == '%')
 		{
-			move_str += ft_check_and_parse(input, arg, flags);
+			ft_null_struct(flags);
+			move_str = ft_check_type_and_parse(input, arg, flags);
 			if (move_str >= 0)
 				input+= move_str;
 			else
-				return (0);
-			move_str = 1;
+				return (-1);
 		}
 		else
 		{
@@ -96,6 +42,21 @@ int ft_parse(va_list arg, const char *input)
 			flags->count_print += 1;
 		}
 	}
+	return (0);
+}
+
+int ft_parse(va_list arg, const char *input)
+{
+	s_flags	*flags;
+	int		count_print;
+
+	flags = (s_flags *)malloc(sizeof(s_flags));
+	if (flags == NULL)
+		return (-1);
+	ft_null_struct(flags);
+	flags->count_print = 0;
+	if (ft_print_trash_and_parse_str(arg, flags, input) == -1)
+		return (0);
 	count_print = flags->count_print;
 	free(flags);
 	return (count_print);
@@ -103,8 +64,9 @@ int ft_parse(va_list arg, const char *input)
 
 int ft_printf(const char *input, ...)
 {
-	va_list arg;
-	int count_print;
+	va_list	arg;
+	int		count_print;
+
 	va_start(arg, input);
 	count_print = ft_parse(arg, input);
 	va_end(arg);
