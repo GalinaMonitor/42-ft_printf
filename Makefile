@@ -8,14 +8,21 @@ DIR_PRINTF = ./
 
 DIR_LIBFT = libft/
 
+HEADER = ft_printf.h
+
 SOURCES_LIST_PRINTF = ft_printf.c\
-	ft_obrabotchick.c\
 	ft_parsing.c\
 	ft_itoa_base.c\
 	ft_precision.c\
+	ft_instruments.c\
+	ft_processor.c\
+	ft_parsing_scpr.c\
+	ft_parsing_duxp.c\
+	ft_parsing_args.c\
+	ft_shirina.c\
 	ft_long_math.c\
 	ft_parsing_float.c\
-	ft_instruments.c
+	ft_precision_float.c\
 
 SOURCES_LIST_LIBFT = ft_memset.c\
 	ft_bzero.c\
@@ -75,8 +82,12 @@ $(NAME): $(OBJECTS)
 	@ar rcs $(NAME) $?
 	@echo "libftprintf.a is ready to use"
 
-%.o : %.c
-	@$(CC) $(FLAGS) -c $< -o $@ -I ./
+%.o : %.c $(HEADER)
+	@$(CC) $(FLAGS) -c $< -o $@ -I ./libft
+
+bonus: $(OBJECTS)
+	@ar rcs $(NAME) $?
+	@echo "libftprintf.a with bonuses is ready to use"
 
 clean:
 	@rm -f $(OBJECTS)
@@ -87,4 +98,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY : all re fclean clean
+.PHONY : all re fclean clean bonus

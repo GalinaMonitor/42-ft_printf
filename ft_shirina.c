@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-char	*ft_shirina(char *str, s_flags *flags)
+char	*ft_shirina(char *str, t_flags *flags)
 {
 	int		spaces;
 	int		length;
@@ -18,7 +18,7 @@ char	*ft_shirina(char *str, s_flags *flags)
 
 	if(!(flags->flags & FLAG_FLG_MIN))
 	{
-		if((!(flags->flags & (FLAG_PRS_DIG | FLAG_PRS_ARG)) && (flags->flags & FLAG_FLG_0)) || (flags->flags & (FLAG_TYP_FMIN | FLAG_TYP_F)))
+		if((!(flags->flags & (FLAG_PRS_DIG | FLAG_PRS_ARG)) && (flags->flags & FLAG_FLG_0)))
 		{
 			if(str[ind2] == '-')
 			{

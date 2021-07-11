@@ -69,7 +69,7 @@ int	ft_parse_precision(const char *input, int ind, t_flags *flags, va_list arg)
 			flags->flags |= FLAG_PRS_ARG;
 		ind++;
 	}
-	else if (ft_strchr("diucspfxX",  input[ind]))
+	else if (ft_strchr("diucsfpxX", input[ind]))
 	{
 		flags->flags |= FLAG_PRS_DIG;
 		flags->precision = 0;
@@ -93,7 +93,7 @@ void	ft_parse_type(char input, t_flags *flags)
 		flags->flags |= FLAG_TYP_X;
 	else if (input == 'X')
 		flags->flags |= FLAG_TYP_XB;
-	else if (input == 'f')
+		else if (input == 'f')
 		flags->flags |= FLAG_TYP_F;
 	else if (input == '%')
 		flags->flags |= FLAG_TYP_PR;

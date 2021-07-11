@@ -77,6 +77,8 @@ char	*ft_precision(char *input, t_flags *flags)
 		if (flags->flags & FLAG_FLG_PLUS && result[0] != '-')
 			result = ft_strjoin("+", result);
 	}
+	else if (flags->flags & (FLAG_TYP_F))
+		result = ft_precision_float(input, flags);
 	else
 		return (input);
 	free(input);

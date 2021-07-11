@@ -108,14 +108,15 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 	while(ind1 < size)
 		result[ind1++] = 0;
 	ind1 = 0;
-	while (++ind1 < size) //&& digits[ind1] >= 0 && digits2[ind2] >= 0
+	while (ind1 < size && digits[ind1] >= 0)
 	{
-		while (ind2 < size && size > (ind1 + ind2))
+		while (ind2 < size && size > (ind1 + ind2) && digits2[ind2] >= 0)
 		{
 			result[ind1 + ind2] += digits[ind1] * digits2[ind2];
 			ind2++;
 		}
 		ind2 = 0;
+		ind1++;
 	}
 	ind1 = -1;
 	while (++ind1 < size)
@@ -127,7 +128,7 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 	return (result);
 }
 
-char	*ft_long_digits_to_str(unsigned long long *digits, unsigned long long base, int count, s_flags *flags)
+char	*ft_long_digits_to_str(unsigned long long **digits, unsigned long long base, int count, t_flags *flags)
 {
 	int size = 10;
 	char *str;
@@ -142,14 +143,14 @@ char	*ft_long_digits_to_str(unsigned long long *digits, unsigned long long base,
 	}
 	if (count > 0)
 		while (count-- > 0)
-			str = ft_strjoin(str, ft_itoa_base(digits[count], 10, flags));
+			str = ft_strjoin(str, ft_itoa_base(digits[0][count], 10, flags));
 	else
 	{
-		while (digits[size - 1] == 0)
+		while (digits[0][size - 1] == 0)
 			size--;
 		while (size > 0)
 		{
-			str = ft_strjoin(str, ft_itoa_base(digits[size - 1], 10, flags));
+			str = ft_strjoin(str, ft_itoa_base(digits[0][size - 1], 10, flags));
 			size--;
 		}
 	}

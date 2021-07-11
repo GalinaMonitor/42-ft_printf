@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-void	ft_fill_struct_float(char *input, s_float_length *float_length, s_flags *flags)
+void	ft_fill_struct_float(char *input, s_float_length *float_length, t_flags *flags)
 {
 	float_length->int_part = 0;
 	if (flags->precision == -1)
@@ -18,13 +18,13 @@ int	ft_rounding_up(int count, int ind, char *input)
 {
 	while (count > 1)
 	{
-		if (input[ind] != '9')
+		if (input[ind + count] != '9')
 		{
-			input[ind]+= 1;
+			input[ind + count]+= 1;
 			return (1);
 		}
-		else if (input[ind] == '9')
-			input[ind] = '0';
+		else if (input[ind + count] == '9')
+			input[ind + count] = '0';
 		count--;
 	}
 	return(0);
@@ -52,7 +52,7 @@ int	ft_rounding_up_five_plus(s_float_length *float_length, char *input, char **r
 {
 	int finish;
 
-	finish = ft_rounding_up(float_length->result_fract_part, float_length->result_fract_part + float_length->int_part, input);
+	finish = ft_rounding_up(float_length->result_fract_part, float_length->int_part, input);
 	if (finish == 0)
 	{
 		float_length->int_part--;
@@ -66,30 +66,31 @@ int	ft_rounding_up_five_plus(s_float_length *float_length, char *input, char **r
 	}
 	else
 	{
-		result = malloc(sizeof(char) * (float_length->result_length + 1));
-		return (ft_strlcpy((result[0]), input, float_length->result_length + 1));
+		result[0] = malloc(sizeof(char) * (float_length->result_length + 1));
+		return (ft_strlcpy(result[0], input, float_length->result_length + 1));
 	}
 }
 
-char	*ft_precision_float(char *input, s_flags *flags)
+char	*ft_precision_float(char *input, t_flags *flags)
 {
 	int				print;
 	char			*result;
-	s_float_length	*float_length;
+	s_float_length	float_length;
 
-	ft_fill_struct_float(input, float_length, flags);
-	if (flags->precision == 0 && input[float_length->result_length + 1] == '5')
-		ft_rounding_up_zero_prec(float_length, input, &result);
-	else if (input[float_length->result_fract_part + float_length->int_part + 1] >= '5')
-		print = ft_rounding_up_five_plus(float_length, input, &result);
+	print = 0;
+	ft_fill_struct_float(input, &float_length, flags);
+	if (flags->precision == 0 && input[float_length.result_length + 1] == '5')
+		ft_rounding_up_zero_prec(&float_length, input, &result);
+	else if (input[float_length.result_fract_part + float_length.int_part + 1] >= '5')
+		print = ft_rounding_up_five_plus(&float_length, input, &result);
 	else
 	{
-		result = malloc(sizeof(char) * (float_length->result_length + 1));
-		print = ft_strlcpy(result, input, float_length->result_length + 1);
+		result = malloc(sizeof(char) * (float_length.result_length + 1));
+		print = ft_strlcpy(result, input, float_length.result_length + 1);
 	}
-	if (print < float_length->result_length)
+	if (print < float_length.result_length)
 	{
-		while (print < float_length->result_length)
+		while (print < float_length.result_length)
 			result[print++] ='0';
 		result[print] = '\0';
 	}
