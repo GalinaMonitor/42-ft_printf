@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-char	*ft_parsing_s(va_list arg, s_flags *flags)
+char	*ft_parsing_s(va_list arg)
 {
 	char	*result;
 	char	*temp;
@@ -8,9 +8,7 @@ char	*ft_parsing_s(va_list arg, s_flags *flags)
 
 	temp = va_arg(arg, char *);
 	if (temp == NULL)
-	{
 		result = ft_strdup("(null)");
-	}
 	else
 	{
 		count = ft_strlen(temp) + 1;
@@ -20,7 +18,7 @@ char	*ft_parsing_s(va_list arg, s_flags *flags)
 	return (result);
 }
 
-char	*ft_parsing_c(va_list arg, s_flags *flags)
+char	*ft_parsing_c(va_list arg, t_flags *flags)
 {
 	char	*result;
 
@@ -29,15 +27,13 @@ char	*ft_parsing_c(va_list arg, s_flags *flags)
 	if (*result == '\0')
 	{
 		flags->flags |= FLAG_C_NULL;
-		flags->shirina-= 1;
+		flags->shirina -= 1;
 	}
-	result++;
-	*result = '\0';
-	result--;
+	result[1] = '\0';
 	return (result);
 }
 
-char	*ft_parsing_pr(va_list arg, s_flags *flags)
+char	*ft_parsing_pr(t_flags *flags)
 {
 	char	*result;
 
