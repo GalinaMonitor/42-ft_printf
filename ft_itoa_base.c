@@ -1,3 +1,13 @@
+/*
+**@file					ft_itoa_base.c
+**@author				Gmonitor (gmonitor@student.21-school.ru)
+**@date					2021-07-11
+**
+**@brief
+**
+**@used_functions		ft_intlen_base, ft_itoa_base, ft_calloc,
+*/
+
 #include "ft_printf.h"
 
 int	ft_intlen_base(unsigned long long n, short base)

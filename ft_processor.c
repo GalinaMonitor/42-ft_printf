@@ -1,4 +1,23 @@
+/*
+**@file					ft_processor.c
+**@author				Gmonitor (gmonitor@student.21-school.ru)
+**@date					2021-07-11
+**
+**@brief				Main logical distribution center
+**
+**@used_functions		ft_print_end_of_string, ft_putchar_fd
+**						ft_putstr_fd, ft_processor, ft_type_parse,
+**						ft_precision, ft_shirina, ft_strjoin, ft_strlen
+*/
+
 #include "ft_printf.h"
+
+/*
+**@brief 			Function prints \0
+**
+**@param			str
+**@param			flags
+*/
 
 void	ft_print_end_of_string(char	*str, t_flags *flags)
 {
@@ -15,6 +34,14 @@ void	ft_print_end_of_string(char	*str, t_flags *flags)
 	flags->flags ^= FLAG_C_NULL;
 	flags->count_print += 1;
 }
+
+/*
+**@brief 			Main logical distribution center
+**
+**@param			arg
+**@param			flags
+**@return			int
+*/
 
 int	ft_processor(va_list arg, t_flags *flags)
 {

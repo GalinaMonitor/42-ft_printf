@@ -1,4 +1,26 @@
+/*
+**@file					ft_precision_float.c
+**@author				Gmonitor (gmonitor@student.21-school.ru)
+**@date					2021-07-11
+**
+**@brief 				Function reallocate result-string and applies
+**						precision settings on float string
+**
+**@used_functions		ft_fill_struct_float, ft_rounding_up,
+**						ft_rounding_up_zero_prec, ft_strjoin,
+**						ft_rounding_up_five_plus, ft_strlcpy,
+**						ft_precision_float,
+*/
+
 #include "ft_printf.h"
+
+/*
+**@brief 			Function nulls float structure, according to args
+**
+**@param			input
+**@param			float_length
+**@param			flags
+*/
 
 void	ft_fill_struct_float(char *input, s_float_length *float_length, t_flags *flags)
 {
@@ -13,6 +35,15 @@ void	ft_fill_struct_float(char *input, s_float_length *float_length, t_flags *fl
 	else
 		float_length->result_length = float_length->int_part + float_length->result_fract_part + 1;
 }
+
+/*
+**@brief 			Basic function for rounding up
+**
+**@param			count
+**@param			ind
+**@param			input
+**@return			int
+*/
 
 int	ft_rounding_up(int count, int ind, char *input)
 {
@@ -29,6 +60,14 @@ int	ft_rounding_up(int count, int ind, char *input)
 	}
 	return(0);
 }
+
+/*
+**@brief 			Function rounds up float string with zero-precision
+**
+**@param			float_length
+**@param			input
+**@param			result
+*/
 
 void ft_rounding_up_zero_prec(s_float_length *float_length, char *input, char **result)
 {
@@ -47,6 +86,15 @@ void ft_rounding_up_zero_prec(s_float_length *float_length, char *input, char **
 			result[0] = ft_strjoin("1", result[0]);
 	}
 }
+
+/*
+**@brief 			Function rounds up float string with 5+ digit in the end
+**
+**@param			float_length
+**@param			input
+**@param			result
+**@return			int
+*/
 
 int	ft_rounding_up_five_plus(s_float_length *float_length, char *input, char **result)
 {
@@ -70,6 +118,15 @@ int	ft_rounding_up_five_plus(s_float_length *float_length, char *input, char **r
 		return (ft_strlcpy(result[0], input, float_length->result_length + 1));
 	}
 }
+
+/*
+**@brief			Function reallocate result-string and applies
+**					precision settings on float string
+**
+**@param			input
+**@param			flags
+**@return			char*
+*/
 
 char	*ft_precision_float(char *input, t_flags *flags)
 {

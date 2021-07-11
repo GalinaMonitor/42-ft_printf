@@ -1,4 +1,21 @@
+/*
+**@file					ft_parsing_scpr.c
+**@author				Gmonitor (gmonitor@student.21-school.ru)
+**@date					2021-07-11
+**
+**@brief				Functions make string from string, char, proc
+**
+**@used_functions		{none}
+*/
+
 #include "ft_printf.h"
+
+/*
+**@brief 			Function makes string from string
+**
+**@param			arg
+**@return			char*
+*/
 
 char	*ft_parsing_s(va_list arg)
 {
@@ -18,6 +35,14 @@ char	*ft_parsing_s(va_list arg)
 	return (result);
 }
 
+/*
+**@brief 			Function makes string from char
+**
+**@param			arg
+**@param			flags
+**@return			char*
+*/
+
 char	*ft_parsing_c(va_list arg, t_flags *flags)
 {
 	char	*result;
@@ -32,6 +57,13 @@ char	*ft_parsing_c(va_list arg, t_flags *flags)
 	result[1] = '\0';
 	return (result);
 }
+
+/*
+**@brief 			Function makes string from proc
+**
+**@param			flags
+**@return			char*
+*/
 
 char	*ft_parsing_pr(t_flags *flags)
 {

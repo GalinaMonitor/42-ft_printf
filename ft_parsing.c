@@ -1,4 +1,24 @@
+/*
+**@file					ft_parsing.c
+**@author				Gmonitor (gmonitor@student.21-school.ru)
+**@date					2021-07-11
+**
+**@brief 				Functions parse arguments of arg-string
+**
+**@used_functions		ft_type_parse, ft_parsing_d/u/x/p/s/c/pr,
+**						ft_parser_god, ft_parse_flags, ft_parse_shirina,
+**						ft_parse_precision, ft_parse_precision, ft_parse_type
+*/
+
 #include "ft_printf.h"
+
+/*
+**@brief 			Function parse type of arg-string
+**
+**@param			arg
+**@param			flags
+**@return			char*
+*/
 
 char	*ft_type_parse(va_list arg, t_flags *flags)
 {
@@ -23,6 +43,15 @@ char	*ft_type_parse(va_list arg, t_flags *flags)
 		result = ft_parsing_float(arg, flags);
 	return (result);
 }
+
+/*
+**@brief 			Function parse arg-string
+**
+**@param			input
+**@param			arg
+**@param			flags
+**@return			int
+*/
 
 int	ft_parser_god(const char *input, va_list arg, t_flags *flags)
 {

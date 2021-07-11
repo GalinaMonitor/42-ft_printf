@@ -1,9 +1,35 @@
+/*
+**@file					ft_parsing_duxp.c
+**@author				Gmonitor (gmonitor@student.21-school.ru)
+**@date					2021-07-11
+**
+**@brief				Functions make string from digits, unsigned,
+**						hexadecimal and pointers
+**
+**@used_functions		ft_parsing_d, ft_itoa, ft_parsing_u, ft_parsing_x,
+**						ft_itoa_base, ft_parsing_p, ft_strdup, ft_strjoin
+*/
+
 #include "ft_printf.h"
+
+/*
+**@brief 			Function makes string from integer
+**
+**@param			arg
+**@return			char*
+*/
 
 char	*ft_parsing_d(va_list arg)
 {
 	return (ft_itoa(va_arg(arg, int)));
 }
+
+/*
+**@brief 			Function makes string from unsigned
+**
+**@param			arg
+**@return			char*
+*/
 
 char	*ft_parsing_u(va_list arg)
 {
@@ -15,6 +41,14 @@ char	*ft_parsing_u(va_list arg)
 	return (result);
 }
 
+/*
+**@brief 			Function makes string from hexadecimal number
+**
+**@param			arg
+**@param			flags
+**@return			char*
+*/
+
 char	*ft_parsing_x(va_list arg, t_flags *flags)
 {
 	char	*str;
@@ -22,6 +56,14 @@ char	*ft_parsing_x(va_list arg, t_flags *flags)
 	str = ft_itoa_base(va_arg(arg, unsigned int), 16, flags);
 	return (str);
 }
+
+/*
+**@brief 			Function makes string from pointer
+**
+**@param			arg
+**@param			flags
+**@return			char*
+*/
 
 char	*ft_parsing_p(va_list arg, t_flags *flags)
 {

@@ -1,4 +1,25 @@
+/*
+**@file					ft_precision.c
+**@author				Gmonitor (gmonitor@student.21-school.ru)
+**@date					2021-07-11
+**
+**@brief 				Function reallocate result-string and
+**						applies precision settings on string
+**
+**@used_functions		ft_precision_str, ft_strlen, ft_precision_digits,
+**						ft_cmp_memory_length, ft_precision, ft_strjoin
+*/
+
 #include "ft_printf.h"
+
+/*
+**@brief 			Function reallocate result-string and
+**					applies precision settings on string-string
+**
+**@param			input
+**@param			flags
+**@return			char*
+*/
 
 char	*ft_precision_str(char *input, t_flags *flags)
 {
@@ -28,6 +49,15 @@ char	*ft_precision_str(char *input, t_flags *flags)
 	return (result);
 }
 
+/*
+**@brief 			Function reallocate result-string and
+**					applies precision settings on digit-string
+**
+**@param			input
+**@param			flags
+**@return			char*
+*/
+
 char	*ft_precision_digits(char *input, t_flags *flags)
 {
 	int		size_of_result;
@@ -54,6 +84,15 @@ char	*ft_precision_digits(char *input, t_flags *flags)
 	result[ind] = '\0';
 	return (result);
 }
+
+/*
+**@brief 			Function reallocate result-string and
+**					applies precision settings on string
+**
+**@param			input
+**@param			flags
+**@return			char*
+*/
 
 char	*ft_precision(char *input, t_flags *flags)
 {

@@ -1,4 +1,25 @@
+/*
+**@file					ft_parsing_args.c
+**@author				Gmonitor (gmonitor@student.21-school.ru)
+**@date					2021-07-11
+**
+**@brief 				Functions are used to parse precision, width,
+**						flags and types of the arg-string
+**
+**@used_functions		ft_parse_flags, ft_parse_shirina, ft_atoi,
+**						ft_parse_precision, ft_strchr, ft_parse_type
+*/
+
 #include "ft_printf.h"
+
+/*
+**@brief 			Function parse flags of the string
+**
+**@param			input
+**@param			ind
+**@param			flags
+**@return			int
+*/
 
 int	ft_parse_flags(const char *input, int ind, t_flags *flags)
 {
@@ -28,6 +49,16 @@ int	ft_parse_flags(const char *input, int ind, t_flags *flags)
 	return (ind);
 }
 
+/*
+**@brief 			Function parse width of the string
+**
+**@param			input
+**@param			ind
+**@param			flags
+**@param			arg
+**@return			int
+*/
+
 int	ft_parse_shirina(const char *input, int ind, t_flags *flags, va_list arg)
 {
 	if (input[ind] >= '0' && input[ind] <= '9')
@@ -51,6 +82,16 @@ int	ft_parse_shirina(const char *input, int ind, t_flags *flags, va_list arg)
 	}
 	return (ind);
 }
+
+/*
+**@brief 			Function parse precision of the string
+**
+**@param			input
+**@param			ind
+**@param			flags
+**@param			arg
+**@return			int
+*/
 
 int	ft_parse_precision(const char *input, int ind, t_flags *flags, va_list arg)
 {
@@ -76,6 +117,13 @@ int	ft_parse_precision(const char *input, int ind, t_flags *flags, va_list arg)
 	}
 	return (ind);
 }
+
+/*
+**@brief 			Function parse type of the string
+**
+**@param			input
+**@param			flags
+*/
 
 void	ft_parse_type(char input, t_flags *flags)
 {

@@ -1,4 +1,24 @@
+/*
+**@file					ft_long_math.c
+**@author				Gmonitor (gmonitor@student.21-school.ru)
+**@date					2021-07-11
+**
+**@brief 				List of funcs, used for operations with extra-long digits
+**
+**@used_functions		ft_long_digits, ft_long_digits_sum, ft_long_digits_division,
+**						ft_long_digits_multiply, ft_long_digits_to_str, ft_strdup,
+**						ft_strjoin, ft_itoa_base, ft_itoa_base, ft_long_digits_power
+*/
+
 #include "ft_printf.h"
+
+/*
+**@brief 			Function translates digit into extra-long digit format
+**
+**@param			nbr
+**@param			base
+**@return			unsigned long long*
+*/
 
 unsigned long long	*ft_long_digits(unsigned long long nbr, unsigned long long base)
 {
@@ -23,6 +43,14 @@ unsigned long long	*ft_long_digits(unsigned long long nbr, unsigned long long ba
 	return(digits);
 }
 
+/*
+**@brief 			Function makes sum of two extra-long digits
+**
+**@param			digits
+**@param			digits2
+**@param			base
+**@return			unsigned long long*
+*/
 
 unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long long *digits2, unsigned long long base)
 {
@@ -49,6 +77,15 @@ unsigned long long	*ft_long_digits_sum(unsigned long long *digits, unsigned long
 	free(digits2);
 	return (digits);
 }
+
+/*
+**@brief 			Function makes a division of extra-long digit and normal digit
+**
+**@param			digits
+**@param			num
+**@param			base
+**@return			unsigned long long*
+*/
 
 unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned long long num, unsigned long long base)
 {
@@ -94,6 +131,14 @@ unsigned long long	*ft_long_digits_division(unsigned long long *digits, unsigned
 // 	return (digits);
 // }
 
+/*
+**@brief 			Function multiplicate two extra-long digits
+**
+**@param			digits
+**@param			digits2
+**@param			base
+**@return			unsigned long long*
+*/
 
 unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned long long *digits2, unsigned long long base)
 {
@@ -108,9 +153,9 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 	while(ind1 < size)
 		result[ind1++] = 0;
 	ind1 = 0;
-	while (ind1 < size && digits[ind1] >= 0)
+	while (ind1 < size && digits[ind1] > 0)
 	{
-		while (ind2 < size && size > (ind1 + ind2) && digits2[ind2] >= 0)
+		while (ind2 < size && size > (ind1 + ind2) && digits2[ind2] > 0)
 		{
 			result[ind1 + ind2] += digits[ind1] * digits2[ind2];
 			ind2++;
@@ -127,6 +172,16 @@ unsigned long long	*ft_long_digits_multiply(unsigned long long *digits, unsigned
 		}
 	return (result);
 }
+
+/*
+**@brief 			Function translate extra-long digit into string
+**
+**@param			digits
+**@param			base
+**@param			count
+**@param			flags
+**@return			char*
+*/
 
 char	*ft_long_digits_to_str(unsigned long long **digits, unsigned long long base, int count, t_flags *flags)
 {
@@ -156,6 +211,15 @@ char	*ft_long_digits_to_str(unsigned long long **digits, unsigned long long base
 	}
 	return (str);
 }
+
+/*
+**@brief 			Function raise to a power extra-long digit
+**
+**@param			digits
+**@param			power
+**@param			base
+**@return			unsigned long long*
+*/
 
 unsigned long long	*ft_long_digits_power(unsigned long long *digits, int power, unsigned long long base)
 {

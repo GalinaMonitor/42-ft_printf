@@ -1,3 +1,14 @@
+/*
+**@file					ft_shirina.c
+**@author				Gmonitor (gmonitor@student.21-school.ru)
+**@date					2021-07-12
+**
+**@brief 				Function reallocates result-string and
+**						applies width settings on string
+**
+**@used_functions		ft_shirina, ft_strlen
+*/
+
 #include "ft_printf.h"
 
 char	*ft_shirina(char *str, t_flags *flags)

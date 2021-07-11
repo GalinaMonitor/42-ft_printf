@@ -1,4 +1,20 @@
+/*
+**@file					ft_instruments.c
+**@author				Gmonitor (gmonitor@student.21-school.ru)
+**@date					2021-07-11
+**
+**@brief 				Functions that are used in libftprintf.a multiple times
+**
+**@used_functions		ft_null_struct, ft_check_if_type, ft_strchr, ft_cmp_memory_length
+*/
+
 #include "ft_printf.h"
+
+/*
+**@brief 			Function nulls flags structure
+**
+**@param			flags
+*/
 
 void	ft_null_struct(t_flags *flags)
 {
@@ -7,6 +23,13 @@ void	ft_null_struct(t_flags *flags)
 	flags->shirina = 0;
 	flags->arg_type = 0;
 }
+
+/*
+**@brief 			Function, that checks, if there is a type in the string
+**
+**@param			input
+**@return			int
+*/
 
 int	ft_check_if_type(const char *input)
 {
@@ -19,6 +42,17 @@ int	ft_check_if_type(const char *input)
 		return (0);
 	return (-1);
 }
+
+/*
+**@brief 			Function, that compare precision and length of the string
+**					and allocate appropriate amount of memory for string
+**
+**@param			input
+**@param			res
+**@param			len_inp
+**@param			flags
+**@return			int
+*/
 
 int	ft_cmp_memory_length(char *input, char **res, int len_inp, t_flags *flags)
 {
