@@ -15,6 +15,6 @@ How to make libftprintf.a
 	gcc libftprintf.a your_program.c
 There are additional commands for make
 
-	make clean // clean all .o and .d files
-	make fclean // clean libftprintf.a, all .o and .d files
-	make bonus // add list functions
+* `make clean` // clean all .o and .d files
+* `make fclean` // clean libftprintf.a, all .o and .d files
+* `make bonus` // add list functions
